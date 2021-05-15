@@ -12,9 +12,9 @@ router.route('/:id').get(async (req, res) => {
   const result = await usersService.getById(req.params.id);
 
   if (result.code === 'error') {
-    res.status(404).json({ error: result.message });
+    res.status(result.status).json({ error: result.message });
   } else {
-    res.json(User.toResponse(result.user));
+    res.status(result.status).json(User.toResponse(result.user));
   }
 });
 
@@ -24,9 +24,9 @@ router.route('/').post(async (req, res) => {
   const result = await usersService.createUser(newUser);
 
   if (result.code === 'error') {
-    res.status(400).json({ error: result.message });
+    res.status(result.status).json({ error: result.message });
   } else {
-    res.status(201).json(User.toResponse(result.user));
+    res.status(result.status).json(User.toResponse(result.user));
   }
 });
 

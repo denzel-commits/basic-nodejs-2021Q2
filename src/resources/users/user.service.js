@@ -8,27 +8,32 @@ const getById = async (id) => {
     const user = await usersRepo.read(id);
 
     if (user === undefined) {
-      return { code: 'error', message: 'User not found' };
+      return { code: 'error', status: 404, message: 'User not found' };
     }
-    return { code: 'success', user };
+    return { code: 'success', status: 200, user };
   }
   return { code: 'error', message: 'Id is undefined' };
 };
 
 const createUser = (user) => {
   if (Object.entries(user).length === 0) {
-    return { code: 'error', message: 'Bad request, accepted empty object.' };
+    return {
+      code: 'error',
+      status: 400,
+      message: 'Bad request, accepted empty object.',
+    };
   }
   if (!validate.objFields(user, ['name', 'login', 'password'])) {
     return {
       code: 'error',
+      status: 201,
       message: 'Bad request, one or more required user fields are missed.',
     };
   }
 
   usersRepo.create(user);
 
-  return { code: 'success', user };
+  return { code: 'success', status: 201, user };
 };
 
 const updateUser = async (id, user) => {

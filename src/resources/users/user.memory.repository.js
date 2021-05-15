@@ -31,7 +31,7 @@ const update = async (id, user) => {
 const remove = async (id) => {
   const index = usersTable.findIndex((entry) => entry.id === id);
   usersTable.splice(index, 1);
-  // usersTable = usersTable.filter((entry) => entry.id !== id); // tasks = tasks.filter((task) => task.boardId !== boardId);
+
   return true;
 };
 
