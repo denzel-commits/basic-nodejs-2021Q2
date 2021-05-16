@@ -32,7 +32,7 @@ const deleteBoard = async (id) => {
   boardsRepo.remove(id);
 
   // get all tasks on board
-  const boardTasks = await tasksService.getAllByBoardId(id);
+  const boardTasks = await tasksService.getAll(id);
 
   // remove all tasks on board
   boardTasks.forEach((task) => {

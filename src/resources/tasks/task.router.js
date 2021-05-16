@@ -10,13 +10,9 @@ router.route('/').get(async (req, res) => {
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
 
-  const tasks = await tasksService.getAllByBoardId(req.params.boardId);
+  const tasks = await tasksService.getAll(req.params.boardId);
 
-  if (tasks.length === 0) {
-    res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
-  } else {
-    res.status(StatusCodes.OK).json(tasks.map((task) => Task.toResponse(task)));
-  }
+  res.status(StatusCodes.OK).json(tasks.map((task) => Task.toResponse(task)));
 });
 
 router.route('/:taskId').get(async (req, res) => {
@@ -61,7 +57,7 @@ router.route('/').post(async (req, res) => {
 
   const task = await tasksService.createTask(req.params.boardId, req.body);
 
-  res.status(StatusCodes.CREATED).json(Task.toResponse(task));
+  res.status(StatusCodes.CREATED).json(task);
 });
 
 router.route('/:taskId').put(async (req, res) => {

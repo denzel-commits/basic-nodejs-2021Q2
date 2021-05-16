@@ -1,14 +1,14 @@
 const tasksRepo = require('./task.memory.repository');
 const Task = require('./task.model');
 
-const getAllByBoardId = (boardId) => tasksRepo.getAllByBoardId(boardId);
+const getAll = (boardId) => tasksRepo.getAllByBoardId(boardId);
 
 const getAllByUserId = (userId) => tasksRepo.getAllByUserId(userId);
 
 const getById = (boardId, taskId) => tasksRepo.read(boardId, taskId);
 
 const createTask = (boardId, task) => {
-  const newTask = new Task(task);
+  const newTask = new Task(boardId, task);
 
   tasksRepo.create(newTask);
 
@@ -36,7 +36,7 @@ const deleteTask = async (boardId, taskId) => {
 };
 
 module.exports = {
-  getAllByBoardId,
+  getAll,
   getAllByUserId,
   getById,
   createTask,
