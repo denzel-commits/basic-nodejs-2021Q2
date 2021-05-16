@@ -1,4 +1,5 @@
 const boardsRepo = require('./board.memory.repository');
+const tasksService = require('../tasks/task.service');
 const validate = require('../validation.js');
 
 const getAll = () => boardsRepo.getAll();
@@ -72,6 +73,14 @@ const deleteBoard = async (id) => {
 
     if (board !== undefined) {
       boardsRepo.remove(id);
+      // get all tasks on board
+      const boardTasks = await tasksService.getAllByBoardId(id);
+
+      // remove all tasks on board
+      if (boardTasks.tasks !== undefined && boardTasks.tasks.length !== 0)
+        boardTasks.tasks.forEach((task) => {
+          tasksService.deleteTask(id, task.id);
+        });
 
       return {
         code: 'success',

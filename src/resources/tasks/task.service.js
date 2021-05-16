@@ -5,7 +5,7 @@ const getAllByBoardId = async (boardId) => {
   if (boardId !== undefined) {
     const tasks = await tasksRepo.getAllByBoardId(boardId);
 
-    if (tasks === undefined) {
+    if (tasks.length === 0) {
       return { code: 'error', status: 404, message: 'tasks not found' };
     }
     return { code: 'success', status: 200, tasks };

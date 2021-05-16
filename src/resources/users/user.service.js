@@ -1,4 +1,5 @@
 const usersRepo = require('./user.memory.repository');
+const tasksRepo = require('../tasks/task.memory.repository');
 const validate = require('../validation.js');
 
 const getAll = () => usersRepo.getAll();
@@ -71,6 +72,7 @@ const deleteUser = async (id) => {
 
     if (user !== undefined) {
       usersRepo.remove(id);
+      tasksRepo.removeAssigneeById(id);
 
       return {
         code: 'success',

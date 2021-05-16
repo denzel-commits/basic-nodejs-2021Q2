@@ -13,7 +13,7 @@ const tasksTable = [
     title: 'Task2',
     order: 0,
     description: 'to-dos',
-    userId: 'uid4345',
+    userId: '1',
     boardId: '3',
     columnId: 'columnid1',
   },
@@ -30,7 +30,10 @@ const tasksTable = [
 
 // TODO: mock implementation. should be replaced during task development
 const getAllByBoardId = async (boardId) =>
-  tasksTable.find((entry) => entry.boardId === boardId);
+  tasksTable.filter((entry) => entry.boardId === boardId);
+
+// const getAllByUserId = async (userId) =>
+//  tasksTable.filter((entry) => entry.userId === userId);
 
 const create = async (task) => tasksTable.push(task);
 
@@ -61,4 +64,24 @@ const remove = async (boardId, taskId) => {
   return true;
 };
 
-module.exports = { getAllByBoardId, create, read, update, remove };
+const removeAssigneeById = async (userId) => {
+  const userEntries = tasksTable.filter((entry) => entry.userId === userId);
+
+  userEntries.forEach((userEntry) => {
+    const index = tasksTable.findIndex(
+      (entry) => entry.userId === userEntry.userId
+    );
+    tasksTable[index].userId = null;
+  });
+
+  return true;
+};
+
+module.exports = {
+  getAllByBoardId,
+  create,
+  read,
+  update,
+  remove,
+  removeAssigneeById,
+};
