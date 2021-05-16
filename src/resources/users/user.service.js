@@ -1,92 +1,45 @@
 const usersRepo = require('./user.memory.repository');
 const tasksRepo = require('../tasks/task.memory.repository');
-const validate = require('../validation.js');
+const User = require('./user.model');
 
 const getAll = () => usersRepo.getAll();
 
-const getById = async (id) => {
-  if (id !== undefined) {
-    const user = await usersRepo.read(id);
-
-    if (user === undefined) {
-      return { code: 'error', status: 404, message: 'User not found' };
-    }
-    return { code: 'success', status: 200, user };
-  }
-  return { code: 'error', message: 'Id is undefined' };
-};
+const getById = (id) => usersRepo.read(id);
 
 const createUser = (user) => {
-  if (Object.entries(user).length === 0) {
-    return {
-      code: 'error',
-      status: 400,
-      message: 'Bad request, accepted empty object.',
-    };
-  }
-  if (!validate.objFields(user, ['name', 'login', 'password'])) {
-    return {
-      code: 'error',
-      status: 201,
-      message: 'Bad request, one or more required user fields are missed.',
-    };
-  }
+  const newUser = new User(user);
 
-  usersRepo.create(user);
+  usersRepo.create(newUser);
 
-  return { code: 'success', status: 201, user };
+  return newUser;
 };
 
 const updateUser = async (id, user) => {
-  if (id !== undefined) {
-    const foundUser = await usersRepo.read(id);
+  const foundUser = await usersRepo.read(id);
 
-    if (foundUser !== undefined) {
-      if (!validate.objFields(user, ['name', 'login', 'password'])) {
-        return {
-          code: 'error',
-          message: 'Bad request, one or more required user fields are missed.',
-        };
-      }
+  if (foundUser === undefined) return false;
 
-      usersRepo.update(id, user);
+  usersRepo.update(id, user);
 
-      return {
-        code: 'success',
-        status: 200,
-        message: `User with ID: ${id} successfully updated`,
-      };
-    }
-    return {
-      code: 'error',
-      status: 404,
-      message: `User with ID: ${id} not found`,
-    };
-  }
-  return { code: 'error', status: 400, message: 'Id is undefined' };
+  return true;
 };
 
 const deleteUser = async (id) => {
-  if (id !== undefined) {
-    const user = await usersRepo.read(id);
+  const user = await usersRepo.read(id);
 
-    if (user !== undefined) {
-      usersRepo.remove(id);
-      tasksRepo.removeAssigneeById(id);
+  if (user === undefined) return false;
 
-      return {
-        code: 'success',
-        status: 204,
-        message: `User with ID: ${id} successfully deleted`,
-      };
-    }
-    return {
-      code: 'error',
-      status: 404,
-      message: `User with ID: ${id} not found`,
-    };
-  }
-  return { code: 'error', status: 400, message: 'Id is undefined' };
+  usersRepo.remove(id);
+  tasksRepo.removeAssigneeById(id);
+
+  /* const userTasks = await tasksService.getAllByUserId(id);
+
+  userTasks.forEach((task) => {
+    task.userId = null;
+    tasksService.updateTask(task.boardId, task.id, task);
+  }); */
+
+  return true;
 };
 
 module.exports = { getAll, getById, createUser, updateUser, deleteUser };

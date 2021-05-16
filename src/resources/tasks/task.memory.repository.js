@@ -32,8 +32,8 @@ const tasksTable = [
 const getAllByBoardId = async (boardId) =>
   tasksTable.filter((entry) => entry.boardId === boardId);
 
-// const getAllByUserId = async (userId) =>
-//  tasksTable.filter((entry) => entry.userId === userId);
+const getAllByUserId = async (userId) =>
+  tasksTable.filter((entry) => entry.userId === userId);
 
 const create = async (task) => tasksTable.push(task);
 
@@ -79,9 +79,10 @@ const removeAssigneeById = async (userId) => {
 
 module.exports = {
   getAllByBoardId,
+  getAllByUserId,
+  removeAssigneeById,
   create,
   read,
   update,
   remove,
-  removeAssigneeById,
 };

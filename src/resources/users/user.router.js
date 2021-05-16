@@ -1,52 +1,85 @@
 const router = require('express').Router();
+const { ReasonPhrases, StatusCodes } = require('http-status-codes');
 const User = require('./user.model');
 const usersService = require('./user.service');
+const validate = require('../validation.js');
 
 router.route('/').get(async (req, res) => {
   const users = await usersService.getAll();
-  // map user fields to exclude secret fields like "password"
-  res.json(users.map(User.toResponse));
+
+  res.status(StatusCodes.OK).json(users.map(User.toResponse));
 });
 
 router.route('/:id').get(async (req, res) => {
-  const result = await usersService.getById(req.params.id);
+  if (req.params.id === undefined)
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ error: ReasonPhrases.BAD_REQUEST });
 
-  if (result.code === 'error') {
-    res.status(result.status).json({ error: result.message });
+  const user = await usersService.getById(req.params.id);
+
+  if (user === undefined) {
+    res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
   } else {
-    res.status(result.status).json(User.toResponse(result.user));
+    res.status(StatusCodes.OK).json(User.toResponse(user));
   }
 });
 
 router.route('/').post(async (req, res) => {
-  const newUser = new User(req.body);
-
-  const result = await usersService.createUser(newUser);
-
-  if (result.code === 'error') {
-    res.status(result.status).json({ error: result.message });
-  } else {
-    res.status(result.status).json(User.toResponse(result.user));
+  if (req.body === undefined || req.body.length === 0) {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ error: ReasonPhrases.BAD_REQUEST });
   }
+
+  if (!validate.objFields(req.body, ['name', 'login', 'password'])) {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ error: ReasonPhrases.BAD_REQUEST });
+  }
+
+  const user = await usersService.createUser(req.body);
+
+  res.status(StatusCodes.CREATED).json(User.toResponse(user));
 });
 
 router.route('/:id').put(async (req, res) => {
+  if (req.params.id === undefined || req.body === undefined) {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ error: ReasonPhrases.BAD_REQUEST });
+  }
+
+  if (!validate.objFields(req.body, ['name', 'login', 'password'])) {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ error: ReasonPhrases.BAD_REQUEST });
+  }
+
   const result = await usersService.updateUser(req.params.id, req.body);
 
-  if (result.code === 'error') {
-    res.status(result.status).json({ error: result.message });
+  if (!result) {
+    res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
   } else {
-    res.status(result.status).json({ message: result.message });
+    res.status(StatusCodes.OK).json({ message: `User successfully updated` });
   }
 });
 
 router.route('/:id').delete(async (req, res) => {
+  if (req.params.id === undefined) {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ error: ReasonPhrases.BAD_REQUEST });
+  }
+
   const result = await usersService.deleteUser(req.params.id);
 
-  if (result.code === 'error') {
-    res.status(result.status).json({ error: result.message });
+  if (!result) {
+    res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
   } else {
-    res.status(result.status).json({ message: result.message });
+    res
+      .status(StatusCodes.NO_CONTENT)
+      .json({ message: ReasonPhrases.NO_CONTENT });
   }
 });
 

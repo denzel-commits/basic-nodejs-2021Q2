@@ -1,100 +1,45 @@
 const boardsRepo = require('./board.memory.repository');
+const Board = require('./board.model');
 const tasksService = require('../tasks/task.service');
-const validate = require('../validation.js');
 
 const getAll = () => boardsRepo.getAll();
 
-const getById = async (id) => {
-  if (id !== undefined) {
-    const board = await boardsRepo.read(id);
-
-    if (board === undefined) {
-      return { code: 'error', status: 404, message: 'board not found' };
-    }
-    return { code: 'success', status: 200, board };
-  }
-  return { code: 'error', message: 'Id is undefined' };
-};
+const getById = (id) => boardsRepo.read(id);
 
 const createBoard = (board) => {
-  if (Object.entries(board).length === 0) {
-    return {
-      code: 'error',
-      status: 400,
-      message: 'Bad request, accepted empty object.',
-    };
-  }
-  if (!validate.objFields(board, ['title', 'columns'])) {
-    return {
-      code: 'error',
-      status: 400,
-      message: 'Bad request, one or more required board fields are missed.',
-    };
-  }
+  const newBoard = new Board(board);
 
-  boardsRepo.create(board);
+  boardsRepo.create(newBoard);
 
-  return { code: 'success', status: 201, board };
+  return newBoard;
 };
 
 const updateBoard = async (id, board) => {
-  if (id !== undefined) {
-    const foundboard = await boardsRepo.read(id);
+  const foundboard = await boardsRepo.read(id);
 
-    if (foundboard !== undefined) {
-      if (!validate.objFields(board, ['title', 'columns'])) {
-        return {
-          code: 'error',
-          status: 400,
-          message: 'Bad request, one or more required board fields are missed.',
-        };
-      }
+  if (foundboard === undefined) return false;
 
-      boardsRepo.update(id, board);
+  boardsRepo.update(id, board);
 
-      return {
-        code: 'success',
-        status: 200,
-        message: `board with ID: ${id} successfully updated`,
-      };
-    }
-    return {
-      code: 'error',
-      status: 404,
-      message: `board with ID: ${id} not found`,
-    };
-  }
-  return { code: 'error', status: 400, message: 'Id is undefined' };
+  return true;
 };
 
 const deleteBoard = async (id) => {
-  if (id !== undefined) {
-    const board = await boardsRepo.read(id);
+  const board = await boardsRepo.read(id);
 
-    if (board !== undefined) {
-      boardsRepo.remove(id);
-      // get all tasks on board
-      const boardTasks = await tasksService.getAllByBoardId(id);
+  if (board === undefined) return false;
 
-      // remove all tasks on board
-      if (boardTasks.tasks !== undefined && boardTasks.tasks.length !== 0)
-        boardTasks.tasks.forEach((task) => {
-          tasksService.deleteTask(id, task.id);
-        });
+  boardsRepo.remove(id);
 
-      return {
-        code: 'success',
-        status: 204,
-        message: `board with ID: ${id} successfully deleted`,
-      };
-    }
-    return {
-      code: 'error',
-      status: 404,
-      message: `board with ID: ${id} not found`,
-    };
-  }
-  return { code: 'error', status: 400, message: 'Id is undefined' };
+  // get all tasks on board
+  const boardTasks = await tasksService.getAllByBoardId(id);
+
+  // remove all tasks on board
+  boardTasks.forEach((task) => {
+    tasksService.deleteTask(task.boardId, task.id);
+  });
+
+  return true;
 };
 
 module.exports = { getAll, getById, createBoard, updateBoard, deleteBoard };
