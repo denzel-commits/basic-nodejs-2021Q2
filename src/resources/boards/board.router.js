@@ -1,85 +1,86 @@
 const router = require('express').Router();
 const { ReasonPhrases, StatusCodes } = require('http-status-codes');
-const User = require('./user.model');
-const usersService = require('./user.service');
+const Board = require('./board.model');
+const boardsService = require('./board.service');
 const validate = require('../validation.js');
 
 router.route('/').get(async (req, res) => {
-  const users = await usersService.getAll();
+  const boards = await boardsService.getAll();
 
-  res.status(StatusCodes.OK).json(users.map(User.toResponse));
+  res.json(boards.map(Board.toResponse));
 });
 
-router.route('/:id').get(async (req, res) => {
-  if (req.params.id === undefined)
+router.route('/:boardId').get(async (req, res) => {
+  if (req.params.boardId === undefined) {
     res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
+  }
 
-  const user = await usersService.getById(req.params.id);
+  const board = await boardsService.getById(req.params.boardId);
 
-  if (user === undefined) {
+  if (board === undefined) {
     res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
   } else {
-    res.status(StatusCodes.OK).json(User.toResponse(user));
+    res.status(StatusCodes.OK).json(Board.toResponse(board));
   }
 });
 
 router.route('/').post(async (req, res) => {
-  if (req.body === undefined || req.body.length === 0) {
+  if (Object.entries(req.body).length === 0) {
     res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
   }
 
-  if (!validate.objFields(req.body, ['name', 'login', 'password'])) {
+  if (!validate.objFields(req.body, ['title', 'columns'])) {
     res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
   }
 
-  const user = await usersService.createUser(req.body);
+  const board = await boardsService.createBoard(req.body);
 
-  res.status(StatusCodes.CREATED).json(User.toResponse(user));
+  res.status(StatusCodes.CREATED).json(Board.toResponse(board));
 });
 
-router.route('/:id').put(async (req, res) => {
-  if (req.params.id === undefined || req.body === undefined) {
+router.route('/:boardId').put(async (req, res) => {
+  if (req.params.boardId === undefined) {
     res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
   }
 
-  if (!validate.objFields(req.body, ['name', 'login', 'password'])) {
+  if (!validate.objFields(req.body, ['title', 'columns'])) {
     res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
   }
 
-  const result = await usersService.updateUser(req.params.id, req.body);
+  const result = await boardsService.updateBoard(req.params.boardId, req.body);
 
   if (!result) {
     res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
   } else {
-    res.status(StatusCodes.OK).json({ message: `User successfully updated` });
+    res.status(StatusCodes.OK).json({ message: `Board successfully updated` });
   }
 });
 
-router.route('/:id').delete(async (req, res) => {
-  if (req.params.id === undefined) {
+router.route('/:boardId').delete(async (req, res) => {
+  if (req.params.boardId === undefined) {
     res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
   }
 
-  const result = await usersService.deleteUser(req.params.id);
+  const result = await boardsService.deleteBoard(req.params.boardId);
 
   if (!result) {
     res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
   } else {
     res
       .status(StatusCodes.NO_CONTENT)
-      .json({ message: ReasonPhrases.NO_CONTENT });
+      .json({ message: `Board successfully deleted` });
   }
 });
 
