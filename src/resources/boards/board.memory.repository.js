@@ -1,67 +1,57 @@
-const boardsTable = [
-  {
-    id: '1',
-    title: 'Board 1',
-    columns: [
-      { id: '111', title: 'col1', order: 1 },
-      { id: '222', title: 'col2', order: 2 },
-      { id: '333', title: 'col3', order: 3 },
-    ],
-  },
-  {
-    id: '2',
-    title: 'Board 2',
-    columns: [
-      { id: '444', title: 'col241', order: 1 },
-      { id: '555', title: 'col2', order: 2 },
-      { id: '666', title: 'col3', order: 3 },
-    ],
-  },
-  {
-    id: '3',
-    title: 'Board 3',
-    columns: [
-      { id: '888', title: 'col1', order: 1 },
-      { id: '999', title: 'col2', order: 2 },
-      { id: '1022', title: 'col3', order: 3 },
-    ],
-  },
-  {
-    id: '4',
-    title: 'Board 4',
-    columns: [
-      { id: '1023', title: 'col1', order: 1 },
-      { id: '1024', title: 'col2', order: 2 },
-      { id: '1035', title: 'col3', order: 3 },
-    ],
-  },
-  {
-    id: '5',
-    title: 'Board 5',
-    columns: [
-      { id: '1036', title: 'col1', order: 1 },
-      { id: '1037', title: 'col2', order: 2 },
-      { id: '1045', title: 'col3', order: 3 },
-    ],
-  },
-];
+/**
+ * @module Board memory repository
+ */
+const Board = require('./board.model');
 
-// TODO: mock implementation. should be replaced during task development
+const boardsTable = [];
+
+/**
+ * Returns all available boards
+ *
+ * @returns {Promise<Board[]>}
+ */
 const getAll = async () => boardsTable;
 
-const create = async (board) => boardsTable.push(board);
+/**
+ * Save new board in database
+ *
+ * @param {Board} board - Board object
+ *
+ * @returns {Promise<Board>} Returns created board
+ */
+const create = async (board) => {
+  const newBoard = new Board(board);
+  boardsTable.push(newBoard);
 
+  return boardsTable.find((entry) => entry.id === newBoard.id);
+};
+
+/**
+ * Get board from database by id
+ *
+ * @param {String} id - Board id
+ * @returns {Promise<Board>} Board info
+ */
 const read = async (id) => boardsTable.find((entry) => entry.id === id);
 
+/**
+ * Update board in database
+ * @param {String} id - Board id
+ * @param {Board} board - Board object to update to
+ * @returns {Promise<void>} Returns nothing
+ */
 const update = async (id, board) => {
   const index = boardsTable.findIndex((entry) => entry.id === id);
 
   boardsTable[index].title = board.title;
   boardsTable[index].columns = board.columns;
-
-  return true;
 };
 
+/**
+ * Delete board from database
+ * @param {String} id - Board id to delete
+ * @returns {Promise<void>} Returns nothing
+ */
 const remove = async (id) => {
   const index = boardsTable.findIndex((entry) => entry.id === id);
   boardsTable.splice(index, 1);

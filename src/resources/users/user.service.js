@@ -1,19 +1,37 @@
-const usersRepo = require('./user.memory.repository');
-const tasksRepo = require('../tasks/task.memory.repository');
-const User = require('./user.model');
+/**
+ * @module User service
+ */
 
+const usersRepo = require('./user.memory.repository');
+const tasksService = require('../tasks/task.service');
+
+/**
+ * Get all users
+ *
+ * @returns {Promise<User[]>} All users
+ */
 const getAll = () => usersRepo.getAll();
 
+/**
+ * Get user by id
+ * @param {String} id - User id
+ * @returns {Promise<User>} Returns user object
+ */
 const getById = (id) => usersRepo.read(id);
 
-const createUser = (user) => {
-  const newUser = new User(user);
+/**
+ * Create new user with given user info
+ * @param {User} user - User info
+ * @returns {Promise<User>} Returns created user
+ */
+const createUser = (user) => usersRepo.create(user);
 
-  usersRepo.create(newUser);
-
-  return newUser;
-};
-
+/**
+ * Update user by id
+ * @param {String} userId - User id to update
+ * @param {User} user - User info to update to
+ * @returns {Promise<Boolean>} Returns "true" on success and "false" if user does not exist
+ */
 const updateUser = async (id, user) => {
   const foundUser = await usersRepo.read(id);
 
@@ -24,20 +42,25 @@ const updateUser = async (id, user) => {
   return true;
 };
 
+/**
+ * Delete user by id and set userId = null for all assigned tasks
+ * @param {String} userId - User id to delete
+ * @returns {Promise<void>} Returns nothing
+ */
 const deleteUser = async (id) => {
   const user = await usersRepo.read(id);
 
   if (user === undefined) return false;
 
   usersRepo.remove(id);
-  tasksRepo.removeAssigneeById(id);
 
-  /* const userTasks = await tasksService.getAllByUserId(id);
+  const userTasks = await tasksService.getAllByUserId(id);
 
   userTasks.forEach((task) => {
-    task.userId = null;
-    tasksService.updateTask(task.boardId, task.id, task);
-  }); */
+    const curTask = task;
+    curTask.userId = null;
+    tasksService.updateTask(task.boardId, task.id, curTask);
+  });
 
   return true;
 };

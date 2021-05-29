@@ -1,36 +1,42 @@
+/**
+ * @module User memory repository
+ */
+
+const User = require('./user.model');
+
 const usersTable = [];
 
 /**
- * Returns all available users {Promise.<Array.<{id: String, name: String, login: String, password: String}>>}
+ * Returns all available users
  *
- * @returns {Promise<User[]>}
+ * @returns {Promise<User[]>} - All users
  */
 const getAll = async () => usersTable;
 
 /**
- * Add new user in database
- * @typedef {Object} User
- * @property {string} id Unique user's id generated via 'uuid'
- * @property {string} name User's name
- * @property {string} login User's login
- * @property {string} password User's password
+ * Save new user in database
+ * @param {User} user - User info
  *
- * @returns {Promise<Number>} Number of records in the database
+ * @returns {Promise<User>} Returns created user
  */
-const create = async (user) => usersTable.push(user);
+const create = async (user) => {
+  const newUser = new User(user);
+  usersTable.push(newUser);
+  return usersTable.find((entry) => entry.id === newUser.id);
+};
 
 /**
- * Selects a user data from database by user id
- * @param {Number} id User id
- * @returns {Promise<User>} Found user
+ * Get user data from database by user id
+ * @param {String} id - User id
+ * @returns {Promise<User>} User info
  */
 const read = async (id) => usersTable.find((entry) => entry.id === id);
 
 /**
  * Update user data in database
- * @param {Number} id User id
- * @param {Object} user User object
- * @returns {Promise<void>}
+ * @param {String} id - User id
+ * @param {Object} user - User object to update to
+ * @returns {Promise<void>} Returns nothing
  */
 const update = async (id, user) => {
   const index = usersTable.findIndex((entry) => entry.id === id);
@@ -42,8 +48,8 @@ const update = async (id, user) => {
 
 /**
  * Delete user from database
- * @param {Number} id User id
- * @returns {Promise<void>}
+ * @param {String} id - User id to delete
+ * @returns {Promise<void>} Returns nothing
  */
 const remove = async (id) => {
   const index = usersTable.findIndex((entry) => entry.id === id);

@@ -1,19 +1,37 @@
+/**
+ * @module Board service
+ */
+
 const boardsRepo = require('./board.memory.repository');
-const Board = require('./board.model');
 const tasksService = require('../tasks/task.service');
 
+/**
+ * Get all boards
+ *
+ * @returns {Promise<Board[]>} All boards
+ */
 const getAll = () => boardsRepo.getAll();
 
+/**
+ * Get board by id
+ * @param {String} id - Board id
+ * @returns {Promise<Board>} Returns boad object
+ */
 const getById = (id) => boardsRepo.read(id);
 
-const createBoard = (board) => {
-  const newBoard = new Board(board);
+/**
+ * Create new board with given board info
+ * @param {Board} user - Board info
+ * @returns {Promise<Board>} Returns created board
+ */
+const createBoard = (board) => boardsRepo.create(board);
 
-  boardsRepo.create(newBoard);
-
-  return newBoard;
-};
-
+/**
+ * Update board by id
+ * @param {String} id - Board id to update
+ * @param {Board} board - Board info to update to
+ * @returns {Promise<Boolean>} Returns "true" on success and "false" if board does not exist
+ */
 const updateBoard = async (id, board) => {
   const foundboard = await boardsRepo.read(id);
 
@@ -24,6 +42,11 @@ const updateBoard = async (id, board) => {
   return true;
 };
 
+/**
+ * Delete board by id and delete all its tasks
+ * @param {String} id - Board id to delete
+ * @returns {Promise<void>} Returns nothing
+ */
 const deleteBoard = async (id) => {
   const board = await boardsRepo.read(id);
 

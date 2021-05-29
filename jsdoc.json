@@ -1,4 +1,9 @@
 {
+  "source": {
+    "include": ["src/resources"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+},
 "opts": {
     "template": "node_modules/better-docs"
   }
