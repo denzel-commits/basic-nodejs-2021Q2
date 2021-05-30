@@ -1,6 +1,20 @@
 import { v4 as uuidv4 } from 'uuid';
 
 class Task {
+  id: string;
+
+  title: string;
+
+  order: number;
+
+  description: string;
+
+  userId: string | null;
+
+  boardId: string | null;
+
+  columnId: string;
+
   /**
    * Task model constructor
    * @param {string} boardId - The boardId of the task.
@@ -9,7 +23,7 @@ class Task {
    * @param {string} [Task.title='Task'] - The title of the task.
    * @param {number} [Task.order=0] - The order of the task in column.
    * @param {string} [Task.description='Task description'] - The description of the task.
-   * @param {string} [Task.userId=''] - The userId of the task assignee.
+   * @param {string|null} [Task.userId=''] - The userId of the task assignee.
    * @param {string} [Task.columnId=''] - The columnId of the task.
    */
   constructor(
@@ -37,10 +51,10 @@ class Task {
    * @param {Task} task - Task object
    * @returns {Task} Formatted task object
    */
-  static toResponse(task) {
+  static toResponse = (task: Task): Task => {
     const { id, title, order, description, userId, boardId, columnId } = task;
     return { id, title, order, description, userId, boardId, columnId };
-  }
+  };
 }
 
 export { Task };

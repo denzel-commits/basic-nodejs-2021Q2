@@ -34,12 +34,12 @@ class User {
    * Formats user for response, removing password from output
    * @param {User} user - User object
    * @returns {Object.<{id: string, name: string, login: string}>} Formatted user object
+   * this: void
    */
-  static toResponse(user: User) {
+  static toResponse = (user: User): {id: string, name: string, login: string} => {
     const { id, name, login } = user;
     return { id, name, login };
   }
 }
 
-// export type UserModel = typeof User;
 export { User };

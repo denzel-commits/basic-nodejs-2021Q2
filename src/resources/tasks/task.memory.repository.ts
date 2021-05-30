@@ -2,16 +2,16 @@
  * @module Task memory repository
  */
 
-import Task from './task.model';
+import { Task } from './task.model.js';
 
-const tasksTable = [];
+const tasksTable: Task[] = [];
 
 /**
  * Get all tasks by board id
  * @param {String} boardId - Board id
  * @returns {Promise<Task[]>} All tasks for given board id
  */
-const getAllByBoardId = async (boardId) =>
+const getAllByBoardId = async (boardId:string): Promise<Task[]> =>
   tasksTable.filter((entry) => entry.boardId === boardId);
 
 /**
@@ -19,7 +19,7 @@ const getAllByBoardId = async (boardId) =>
  * @param {String} userId - User id
  * @returns {Promise<Task[]>} All tasks assigned to user id
  */
-const getAllByUserId = async (userId) =>
+const getAllByUserId = async (userId:string): Promise<Task[]> =>
   tasksTable.filter((entry) => entry.userId === userId);
 
 /**
@@ -29,7 +29,7 @@ const getAllByUserId = async (userId) =>
  *
  * @returns {Promise<Task>} Created task
  */
-const create = async (boardId, task) => {
+const create = async (boardId:string, task:Task): Promise<Task> => {
   const newTask = new Task(boardId, task);
   tasksTable.push(newTask);
 
@@ -43,7 +43,7 @@ const create = async (boardId, task) => {
  * @param {String} id - Task id
  * @returns {Promise<Task>} Task object
  */
-const read = async (boardId, taskId) =>
+const read = async (boardId:string, taskId:string) =>
   tasksTable.find((entry) => entry.id === taskId && entry.boardId === boardId);
 
 /**
@@ -53,7 +53,7 @@ const read = async (boardId, taskId) =>
  * @param {Object} task - Task object to update to
  * @returns {Promise<void>} Returns nothing
  */
-const update = async (boardId, taskId, task) => {
+const update = async (boardId:string, taskId:string, task:Task) => {
   const index = tasksTable.findIndex(
     (entry) => entry.id === taskId && entry.boardId === boardId
   );
@@ -72,7 +72,7 @@ const update = async (boardId, taskId, task) => {
  * @param {String} taskId - Task id to delete
  * @returns {Promise<void>} - Returns nothing
  */
-const remove = async (boardId, taskId) => {
+const remove = async (boardId:string, taskId:Task) => {
   const index = tasksTable.findIndex(
     (entry) => entry.id === taskId && entry.boardId === boardId
   );

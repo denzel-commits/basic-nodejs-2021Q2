@@ -2,7 +2,6 @@ import express from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import Board from './board.model';
 import boardsService from './board.service';
-import validate from '../validation.js';
 
 const router = express.Router();
 
@@ -35,12 +34,6 @@ router.route('/').post(async (req, res) => {
       .json({ error: ReasonPhrases.BAD_REQUEST });
   }
 
-  if (!validate.objFields(req.body, ['title', 'columns'])) {
-    res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: ReasonPhrases.BAD_REQUEST });
-  }
-
   const board = await boardsService.createBoard(req.body);
 
   res.status(StatusCodes.CREATED).json(Board.toResponse(board));
@@ -48,12 +41,6 @@ router.route('/').post(async (req, res) => {
 
 router.route('/:boardId').put(async (req, res) => {
   if (req.params.boardId === undefined) {
-    res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: ReasonPhrases.BAD_REQUEST });
-  }
-
-  if (!validate.objFields(req.body, ['title', 'columns'])) {
     res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
