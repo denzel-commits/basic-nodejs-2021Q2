@@ -2,8 +2,8 @@
  * @module User service
  */
 
-const usersRepo = require('./user.memory.repository');
-const tasksService = require('../tasks/task.service');
+import usersRepo from './user.memory.repository';
+import tasksService from '../tasks/task.service';
 
 /**
  * Get all users
@@ -65,4 +65,4 @@ const deleteUser = async (id) => {
   return true;
 };
 
-module.exports = { getAll, getById, createUser, updateUser, deleteUser };
+export { getAll, getById, createUser, updateUser, deleteUser };

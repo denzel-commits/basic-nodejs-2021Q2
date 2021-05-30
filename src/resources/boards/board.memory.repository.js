@@ -1,7 +1,7 @@
 /**
  * @module Board memory repository
  */
-const Board = require('./board.model');
+import Board from './board.model';
 
 const boardsTable = [];
 
@@ -59,4 +59,4 @@ const remove = async (id) => {
   return true;
 };
 
-module.exports = { getAll, create, read, update, remove };
+export { getAll, create, read, update, remove };

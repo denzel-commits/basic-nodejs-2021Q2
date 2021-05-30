@@ -2,8 +2,8 @@
  * @module Board service
  */
 
-const boardsRepo = require('./board.memory.repository');
-const tasksService = require('../tasks/task.service');
+import boardsRepo from './board.memory.repository';
+import tasksService from '../tasks/task.service';
 
 /**
  * Get all boards
@@ -65,4 +65,4 @@ const deleteBoard = async (id) => {
   return true;
 };
 
-module.exports = { getAll, getById, createBoard, updateBoard, deleteBoard };
+export { getAll, getById, createBoard, updateBoard, deleteBoard };

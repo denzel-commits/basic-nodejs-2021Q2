@@ -2,7 +2,7 @@
  * @module Task service
  */
 
-const tasksRepo = require('./task.memory.repository');
+import tasksRepo from './task.memory.repository';
 
 /**
  * Get all tasks from board by board id
@@ -67,11 +67,4 @@ const deleteTask = async (boardId, taskId) => {
   return true;
 };
 
-module.exports = {
-  getAll,
-  getAllByUserId,
-  getById,
-  createTask,
-  updateTask,
-  deleteTask,
-};
+export { getAll, getAllByUserId, getById, createTask, updateTask, deleteTask };

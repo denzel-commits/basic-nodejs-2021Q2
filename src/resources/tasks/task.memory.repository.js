@@ -2,7 +2,7 @@
  * @module Task memory repository
  */
 
-const Task = require('./task.model');
+import Task from './task.model';
 
 const tasksTable = [];
 
@@ -79,7 +79,7 @@ const remove = async (boardId, taskId) => {
   tasksTable.splice(index, 1);
 };
 
-module.exports = {
+export = {
   getAllByBoardId,
   getAllByUserId,
   create,

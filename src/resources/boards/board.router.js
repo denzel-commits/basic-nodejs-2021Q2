@@ -1,8 +1,10 @@
-const router = require('express').Router();
-const { ReasonPhrases, StatusCodes } = require('http-status-codes');
-const Board = require('./board.model');
-const boardsService = require('./board.service');
-const validate = require('../validation.js');
+import express from 'express';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import Board from './board.model';
+import boardsService from './board.service';
+import validate from '../validation.js';
+
+const router = express.Router();
 
 router.route('/').get(async (req, res) => {
   const boards = await boardsService.getAll();
@@ -84,4 +86,4 @@ router.route('/:boardId').delete(async (req, res) => {
   }
 });
 
-module.exports = router;
+export { router };

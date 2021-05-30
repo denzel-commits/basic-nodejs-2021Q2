@@ -1,8 +1,10 @@
-const router = require('express').Router();
-const { ReasonPhrases, StatusCodes } = require('http-status-codes');
-const User = require('./user.model');
-const usersService = require('./user.service');
-const validate = require('../validation.js');
+import express from 'express';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import User from './user.model';
+import usersService from './user.service';
+import validate from '../validation.js';
+
+const router = express.Router();
 
 router.route('/').get(async (req, res) => {
   const users = await usersService.getAll();
@@ -83,4 +85,4 @@ router.route('/:id').delete(async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

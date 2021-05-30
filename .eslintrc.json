@@ -1,5 +1,9 @@
 {
   "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "env": {
     "es2020": true,
     "jasmine": true,
@@ -19,10 +23,13 @@
   "extends": [
     "eslint:recommended",
     "plugin:node/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
     "airbnb-base",
     "prettier"
   ],
   "rules": {
+    "import/no-named-as-default-member": 0,
     "import/extensions": "off",
     "linebreak-style": "off",
     "node/no-unsupported-features/es-syntax": "off",

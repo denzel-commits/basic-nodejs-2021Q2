@@ -2,7 +2,7 @@
  * @module User memory repository
  */
 
-const User = require('./user.model');
+import { User } from './user.model';
 
 const usersTable = [];
 
@@ -56,4 +56,4 @@ const remove = async (id) => {
   usersTable.splice(index, 1);
 };
 
-module.exports = { getAll, create, read, update, remove };
+export { getAll, create, read, update, remove };

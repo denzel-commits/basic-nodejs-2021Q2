@@ -1,5 +1,5 @@
-const { v4: uuidv4 } = require('uuid');
-const Column = require('./column.model.js');
+import { v4 as uuidv4 } from 'uuid';
+import Column from './column.model';
 
 class Board {
   /**
@@ -26,4 +26,4 @@ class Board {
   }
 }
 
-module.exports = Board;
+export { Board };

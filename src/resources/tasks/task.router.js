@@ -1,8 +1,10 @@
-const router = require('express').Router({ mergeParams: true });
-const { ReasonPhrases, StatusCodes } = require('http-status-codes');
-const Task = require('./task.model');
-const tasksService = require('./task.service');
-const validate = require('../validation.js');
+import express from 'express';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import Task from './task.model';
+import tasksService from './task.service';
+import validate from '../validation.js';
+
+const router = express.Router({ mergeParams: true });
 
 router.route('/').get(async (req, res) => {
   if (req.params.boardId === undefined)
@@ -101,4 +103,4 @@ router.route('/:taskId').delete(async (req, res) => {
   }
 });
 
-module.exports = router;
+export { router };
