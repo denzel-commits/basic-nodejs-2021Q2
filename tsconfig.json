@@ -2,7 +2,7 @@
     "compilerOptions": {
       "target": "es2020",
       "module": "es2020",
-      "allowJs": false,
+      "allowJs": true,
       "outDir": "./build",
       "rootDir": "./src",
       "downlevelIteration": false,
@@ -24,6 +24,6 @@
       "node_modules/"
     ],
     "include": [
-      "./src/**/*.ts"
+      "src/**/*"
    ]
   }

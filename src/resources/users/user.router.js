@@ -1,6 +1,6 @@
 import express from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-import User from './user.model';
+import User from './user.model.ts';
 import usersService from './user.service';
 import validate from '../validation.js';
 

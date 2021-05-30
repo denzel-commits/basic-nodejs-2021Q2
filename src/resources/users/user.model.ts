@@ -1,6 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
 
 class User {
+  
+  id: string;
+
+  name: string;
+
+  login: string;
+
+  password: string;
+
   /**
    * User model constructor
    * @param {Object} User - User
@@ -26,10 +35,11 @@ class User {
    * @param {User} user - User object
    * @returns {Object.<{id: string, name: string, login: string}>} Formatted user object
    */
-  static toResponse(user) {
+  static toResponse(user: User) {
     const { id, name, login } = user;
     return { id, name, login };
   }
 }
 
+// export type UserModel = typeof User;
 export { User };

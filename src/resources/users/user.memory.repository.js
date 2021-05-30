@@ -2,7 +2,7 @@
  * @module User memory repository
  */
 
-import { User } from './user.model';
+import { User } from './user.model.ts';
 
 const usersTable = [];
 

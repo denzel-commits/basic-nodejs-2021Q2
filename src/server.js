@@ -1,4 +1,4 @@
-import config from './common/config';
+import config from './common/config.ts';
 import app from './app';
 
 app.listen(config.PORT, () =>
