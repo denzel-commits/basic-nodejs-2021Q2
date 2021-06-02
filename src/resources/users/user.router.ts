@@ -1,75 +1,81 @@
 import express from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-import { User } from './user.model.js';
-import { getAll, getById, createUser, updateUser, deleteUser } from './user.service.js';
+import { User } from './user.model';
+import { getAll, getById, createUser, updateUser, deleteUser } from './user.service';
 
 const router = express.Router();
 
-router.route('/').get(async (req, res) => {
+router.route('/').get(async (req: express.Request, res: express.Response) => {
   const users = await getAll();
 
-  res.status(StatusCodes.OK).json(users.map( User.toResponse ) );
+  return res.status(StatusCodes.OK).json(users.map( User.toResponse ) );
 });
 
-router.route('/:id').get(async (req, res) => {
-  if (req.params.id === undefined)
-    res
+router.route('/:id').get(async (req: express.Request, res: express.Response) => {
+  const {id} = req.params;
+  if (id === undefined)
+    return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
 
-  const user = await getById(req.params.id);
+  const user = await getById(id);
 
   if (user === undefined) {
-    res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
-  } else {
-    res.status(StatusCodes.OK).json(User.toResponse(user));
-  }
+    return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
+  } 
+  
+  return res.status(StatusCodes.OK).json(User.toResponse(user));  
 });
 
-router.route('/').post(async (req, res) => {
+router.route('/').post(async (req: express.Request, res: express.Response) => {
   if (req.body === undefined) {
-    res
+    return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
   }
 
   const user = await createUser(req.body);
 
-  res.status(StatusCodes.CREATED).json(User.toResponse(user));
+  return res.status(StatusCodes.CREATED).json(User.toResponse(user));
 });
 
-router.route('/:id').put(async (req, res) => {
-  if (req.params.id === undefined || req.body === undefined) {
-    res
+router.route('/:id').put(async (req: express.Request, res: express.Response) => {
+  const {id} = req.params;
+
+  if (id === undefined || req.body === undefined) {
+    return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
   }
 
-  const result = await updateUser(req.params.id, req.body);
+  const result = await updateUser(id, req.body);
 
   if (!result) {
-    res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
-  } else {
-    res.status(StatusCodes.OK).json({ message: `User successfully updated` });
-  }
+    return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
+  } 
+  
+  return res.status(StatusCodes.OK).json({ message: `User successfully updated` });  
 });
 
-router.route('/:id').delete(async (req, res) => {
-  if (req.params.id === undefined) {
-    res
+router.route('/:id').delete(async (req: express.Request, res: express.Response) => {
+  const {id} = req.params;
+
+  if (id === undefined) {
+    return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
   }
 
-  const result = await deleteUser(req.params.id);
+  const result = await deleteUser(id);
 
   if (!result) {
-    res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
-  } else {
-    res
+    return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
+  } 
+    
+  return res
       .status(StatusCodes.NO_CONTENT)
       .json({ message: ReasonPhrases.NO_CONTENT });
-  }
+  
 });
 
 export { router };

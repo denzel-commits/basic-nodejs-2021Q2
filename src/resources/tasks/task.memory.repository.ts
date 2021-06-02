@@ -2,7 +2,15 @@
  * @module Task memory repository
  */
 
-import { Task } from './task.model.js';
+import { Task } from './task.model';
+
+function ensure<User>(argument: User | undefined | null, message = 'This value was promised to be there.'): User {
+  if (argument === undefined || argument === null) {
+    throw new TypeError(message);
+  }
+
+  return argument;
+}
 
 const tasksTable: Task[] = [];
 
@@ -33,7 +41,7 @@ const create = async (boardId:string, task:Task): Promise<Task> => {
   const newTask = new Task(boardId, task);
   tasksTable.push(newTask);
 
-  return tasksTable.find((entry) => entry.id === newTask.id);
+  return ensure(tasksTable.find((entry) => entry.id === newTask.id));
 };
 
 /**
@@ -43,8 +51,8 @@ const create = async (boardId:string, task:Task): Promise<Task> => {
  * @param {String} id - Task id
  * @returns {Promise<Task>} Task object
  */
-const read = async (boardId:string, taskId:string) =>
-  tasksTable.find((entry) => entry.id === taskId && entry.boardId === boardId);
+const read = async (boardId:string, taskId:string):Promise<Task> =>
+ensure(tasksTable.find((entry) => entry.id === taskId && entry.boardId === boardId));
 
 /**
  * Update task in database
@@ -53,17 +61,17 @@ const read = async (boardId:string, taskId:string) =>
  * @param {Object} task - Task object to update to
  * @returns {Promise<void>} Returns nothing
  */
-const update = async (boardId:string, taskId:string, task:Task) => {
+const update = async (boardId:string, taskId:string, task:Task):Promise<void> => {
   const index = tasksTable.findIndex(
     (entry) => entry.id === taskId && entry.boardId === boardId
   );
 
-  tasksTable[index].title = task.title;
-  tasksTable[index].order = task.order;
-  tasksTable[index].description = task.description;
-  tasksTable[index].userId = task.userId;
-  tasksTable[index].boardId = task.boardId;
-  tasksTable[index].columnId = task.columnId;
+  ensure(tasksTable[index]).title = task.title;
+  ensure(tasksTable[index]).order = task.order;
+  ensure(tasksTable[index]).description = task.description;
+  ensure(tasksTable[index]).userId = task.userId;
+  ensure(tasksTable[index]).boardId = task.boardId;
+  ensure(tasksTable[index]).columnId = task.columnId;
 };
 
 /**
@@ -72,14 +80,14 @@ const update = async (boardId:string, taskId:string, task:Task) => {
  * @param {String} taskId - Task id to delete
  * @returns {Promise<void>} - Returns nothing
  */
-const remove = async (boardId:string, taskId:Task) => {
+const remove = async (boardId:string, taskId:string):Promise<void> => {
   const index = tasksTable.findIndex(
     (entry) => entry.id === taskId && entry.boardId === boardId
   );
   tasksTable.splice(index, 1);
 };
 
-export = {
+export {
   getAllByBoardId,
   getAllByUserId,
   create,

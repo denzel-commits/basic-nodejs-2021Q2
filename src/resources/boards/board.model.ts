@@ -1,7 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
-import Column from './column.model';
+import {Column} from './column.model';
 
 class Board {
+
+
   /**
    * Board model constructor
    * @param {Object} Board - Board

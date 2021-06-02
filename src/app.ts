@@ -12,7 +12,7 @@ const DIR_NAME = dirname(fileURLToPath(import.meta.url));
 const app = express();
 const swaggerDocument = YAML.load(path.join(DIR_NAME, '../doc/api.yaml')) as JsonObject;
 
-app.use(express.json());
+app.use(express);
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 

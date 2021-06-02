@@ -2,10 +2,10 @@
  * @module User service
  */
 
-import { getAll as getAllDBUsers, create as createDBUser, read as readDBUser, update as updateDBUser, remove as removeDBUser } from './user.memory.repository.js';
-import { getAllByUserId, updateTask } from '../tasks/task.service.js';
-import { User } from './user.model.js';
-import { Task } from '../tasks/task.model.js';
+import { getAll as getAllDBUsers, create as createDBUser, read as readDBUser, update as updateDBUser, remove as removeDBUser } from './user.memory.repository';
+import { getAllByUserId, updateTask } from '../tasks/task.service';
+import { User } from './user.model';
+import { Task } from '../tasks/task.model';
 
 /**
  * Get all users
@@ -61,7 +61,7 @@ const deleteUser = async (id: string):Promise<boolean> => {
 
   userTasks.forEach( (task:Task) => {
     const curTask = task;
-    curTask.userId = null;
+    curTask.userId = '';
     void updateTask(task.boardId, task.id, curTask);
 
   });

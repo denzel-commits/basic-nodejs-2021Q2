@@ -1,106 +1,99 @@
 import express from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-import Task from './task.model';
-import tasksService from './task.service';
-import validate from '../validation.js';
+import { Task } from './task.model';
+import { getAll, getById, createTask, updateTask, deleteTask } from './task.service';
 
 const router = express.Router({ mergeParams: true });
 
-router.route('/').get(async (req, res) => {
-  if (req.params.boardId === undefined)
-    res
+router.route('/').get(async (req: express.Request, res: express.Response) => {
+  const {boardId} = req.params;
+
+  if (boardId === undefined){
+    return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
+  }    
 
-  const tasks = await tasksService.getAll(req.params.boardId);
+  const tasks = await getAll(boardId);
 
-  res.status(StatusCodes.OK).json(tasks.map((task) => Task.toResponse(task)));
+  return res.status(StatusCodes.OK).json(tasks.map((task) => Task.toResponse(task)));
 });
 
-router.route('/:taskId').get(async (req, res) => {
-  if (req.params.boardId === undefined || req.params.taskId === undefined) {
-    res
+router.route('/:taskId').get(async (req: express.Request, res: express.Response) => {
+  const {boardId, taskId} = req.params;
+  if (boardId === undefined || taskId === undefined) {
+    return res
       .status(StatusCodes.BAD_REQUEST)
-      .json({ error: ReasonPhrases.BAD_REQUEST });
+      .json({ error: ReasonPhrases.BAD_REQUEST });  
   }
 
-  const task = await tasksService.getById(
-    req.params.boardId,
-    req.params.taskId
-  );
+  const task = await getById( boardId, taskId );
 
   if (task === undefined) {
-    res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
-  } else {
-    res.status(StatusCodes.OK).json(Task.toResponse(task));
-  }
+    return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
+  } 
+    
+  return res.status(StatusCodes.OK).json(Task.toResponse(task));
+  
 });
 
-router.route('/').post(async (req, res) => {
+router.route('/').post(async (req: express.Request, res: express.Response) => {
+
+  const {boardId} = req.params;
+  
+  if (boardId === undefined) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ error: ReasonPhrases.BAD_REQUEST });
+  }
+
   if (Object.entries(req.body).length === 0) {
-    res
+    return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
   }
+    
+  const task = await createTask(boardId, req.body);
 
-  if (
-    !validate.objFields(req.body, [
-      'title',
-      'order',
-      'description',
-      'userId',
-      'boardId',
-    ])
-  ) {
-    res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: ReasonPhrases.BAD_REQUEST });
-  }
-
-  const task = await tasksService.createTask(req.params.boardId, req.body);
-
-  res.status(StatusCodes.CREATED).json(task);
+  return res.status(StatusCodes.CREATED).json(task);
 });
 
-router.route('/:taskId').put(async (req, res) => {
-  if (req.params.taskId === undefined) {
-    res
+router.route('/:taskId').put(async (req: express.Request, res: express.Response) => {
+  const {boardId, taskId} = req.params;
+  
+  if (boardId === undefined || taskId === undefined) {
+    return res
       .status(StatusCodes.BAD_REQUEST)
-      .json({ error: ReasonPhrases.BAD_REQUEST });
+      .json({ error: ReasonPhrases.BAD_REQUEST });    
   }
 
-  const result = await tasksService.updateTask(
-    req.params.boardId,
-    req.params.taskId,
-    req.body
-  );
+  const result = await updateTask( boardId, taskId, req.body );
 
   if (!result) {
-    res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
-  } else {
-    res.status(StatusCodes.OK).json({ message: `User successfully updated` });
-  }
+    return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
+  } 
+  
+  return res.status(StatusCodes.OK).json({ message: `User successfully updated` });  
 });
 
-router.route('/:taskId').delete(async (req, res) => {
-  if (req.params.taskId === undefined) {
-    res
+router.route('/:taskId').delete(async (req: express.Request, res: express.Response) => {
+  const {boardId, taskId} = req.params;
+
+  if (boardId === undefined || taskId === undefined) {
+    return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
   }
 
-  const result = await tasksService.deleteTask(
-    req.params.boardId,
-    req.params.taskId
-  );
+  const result = await deleteTask( boardId, taskId );
 
   if (!result) {
-    res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
-  } else {
-    res
+    return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
+  } 
+
+  return res
       .status(StatusCodes.NO_CONTENT)
-      .json({ message: ReasonPhrases.NO_CONTENT });
-  }
+      .json({ message: ReasonPhrases.NO_CONTENT });  
 });
 
 export { router };

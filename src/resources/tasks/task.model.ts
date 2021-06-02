@@ -9,9 +9,9 @@ class Task {
 
   description: string;
 
-  userId: string | null;
+  userId: string;
 
-  boardId: string | null;
+  boardId: string;
 
   columnId: string;
 
@@ -27,7 +27,7 @@ class Task {
    * @param {string} [Task.columnId=''] - The columnId of the task.
    */
   constructor(
-    boardId,
+    boardId:string,
     {
       id = uuidv4(),
       title = 'Task',
