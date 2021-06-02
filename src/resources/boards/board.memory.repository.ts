@@ -40,7 +40,13 @@ const create = async (board:Board):Promise<Board> => {
  * @param {String} id - Board id
  * @returns {Promise<Board>} Board info
  */
-const read = async (id:string):Promise<Board> => ensure(boardsTable.find((entry) => entry.id === id));
+const read = async (id:string):Promise<Board> => {
+  
+  const board = boardsTable.find((entry) => entry.id === id);
+
+  if (!board) { throw new Error('NOT_FOUND') }
+  else return board;
+}
 
 /**
  * Update board in database

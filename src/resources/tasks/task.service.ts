@@ -63,7 +63,13 @@ const deleteTask = async (boardId:string, taskId:string):Promise<boolean> => {
 
   if (task === undefined) return false;
 
-  await remove(boardId, taskId);
+  
+
+  try {
+    await remove(boardId, taskId);
+  } catch(err) {
+    console.log(err);
+  }
 
   return true;
 };

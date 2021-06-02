@@ -14,8 +14,8 @@ export default {
   MONGO_CONNECTION_STRING: process.env.['MONGO_CONNECTION_STRING'],
   JWT_SECRET_KEY: process.env.['WT_SECRET_KEY'],
   AUTH_MODE: process.env.['AUTH_MODE'] === 'true',
-}; */
-
+}; 
+*/
 /*
 export default { 
   PORT: process.env.PORT,
@@ -25,5 +25,6 @@ export default {
   AUTH_MODE: process.env.AUTH_MODE === 'true',
 }; */
 
-const  PORT = 4000;
-export { PORT };
+const { PORT, NODE_ENV, MONGO_CONNECTION_STRING, JWT_SECRET_KEY, AUTH_MODE } = process.env;
+
+export { PORT, NODE_ENV, MONGO_CONNECTION_STRING, JWT_SECRET_KEY, AUTH_MODE };

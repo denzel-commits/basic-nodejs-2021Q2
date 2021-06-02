@@ -27,12 +27,17 @@ router.route('/:taskId').get(async (req: express.Request, res: express.Response)
       .json({ error: ReasonPhrases.BAD_REQUEST });  
   }
 
-  const task = await getById( boardId, taskId );
-
+  let task: Task;
+  try{
+     task = await getById( boardId, taskId );
+  }catch(e){
+    return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
+  }
+/*
   if (task === undefined) {
     return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
   } 
-    
+  */  
   return res.status(StatusCodes.OK).json(Task.toResponse(task));
   
 });
@@ -40,19 +45,14 @@ router.route('/:taskId').get(async (req: express.Request, res: express.Response)
 router.route('/').post(async (req: express.Request, res: express.Response) => {
 
   const {boardId} = req.params;
+
   
   if (boardId === undefined) {
     return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
   }
-
-  if (Object.entries(req.body).length === 0) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: ReasonPhrases.BAD_REQUEST });
-  }
-    
+     
   const task = await createTask(boardId, req.body);
 
   return res.status(StatusCodes.CREATED).json(task);

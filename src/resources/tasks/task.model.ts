@@ -13,7 +13,7 @@ class Task{
 
   boardId: string;
 
-  columnId: string;
+  columnId: string | null;
 
   /**
    * Task model constructor

@@ -20,11 +20,12 @@ router.route('/:boardId').get(async (req: express.Request, res: express.Response
       .json({ error: ReasonPhrases.BAD_REQUEST });
   }
 
-  const board = await getById(boardId);
-
-  if (board === undefined) {
+  let board: Board;
+  try{
+    board = await getById(boardId);
+  }catch(e){
     return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
-  } 
+  }
   
   return res.status(StatusCodes.OK).json(Board.toResponse(board));  
 });
