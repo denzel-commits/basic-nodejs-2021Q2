@@ -5,10 +5,10 @@ import { getAll, getById, createBoard, updateBoard, deleteBoard } from './board.
 
 const router = express.Router();
 
-router.route('/').get(async (req: express.Request, res: express.Response) => {
+router.route('/').get(async (_req: express.Request, res: express.Response) => {
   const boards = await getAll();
 
-  return res.json(boards.map(Board.toResponse));
+  res.json(boards.map(Board.toResponse));  
 });
 
 router.route('/:boardId').get(async (req: express.Request, res: express.Response) => {

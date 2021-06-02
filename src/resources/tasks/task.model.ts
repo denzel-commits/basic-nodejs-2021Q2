@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-class Task {
+class Task{
   id: string;
 
   title: string;
@@ -9,7 +9,7 @@ class Task {
 
   description: string;
 
-  userId: string;
+  userId: string | null;
 
   boardId: string;
 
@@ -33,9 +33,9 @@ class Task {
       title = 'Task',
       order = 0,
       description = 'Task description',
-      userId = '',
+      userId = null,
       columnId = '',
-    } = {}
+    }:Task
   ) {
     this.id = id;
     this.title = title;
@@ -56,5 +56,6 @@ class Task {
     return { id, title, order, description, userId, boardId, columnId };
   };
 }
+
 
 export { Task };

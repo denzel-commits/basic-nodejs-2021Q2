@@ -1,11 +1,10 @@
 import dotenv from 'dotenv';
-import path, { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import path from 'path';
 
-const DIR_NAME = dirname(fileURLToPath(import.meta.url));
+const DIR_NAME =  path.resolve(path.dirname(''));
 
 dotenv.config({
-  path: path.join(DIR_NAME, '../../.env'),
+  path: path.join(DIR_NAME, '../.env'),
 });
 
 /*
@@ -26,5 +25,5 @@ export default {
   AUTH_MODE: process.env.AUTH_MODE === 'true',
 }; */
 
-const { PORT } = process.env;
+const  PORT = 4000;
 export { PORT };

@@ -3,7 +3,7 @@
  */
 import { Board } from './board.model';
 
-function ensure<User>(argument: User | undefined | null, message = 'This value was promised to be there.'): User {
+function ensure<Board>(argument: Board | undefined | null, message = 'This value was promised to be there.'): Board {
   if (argument === undefined || argument === null) {
     throw new TypeError(message);
   }

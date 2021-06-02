@@ -5,7 +5,7 @@ import { getAll, getById, createUser, updateUser, deleteUser } from './user.serv
 
 const router = express.Router();
 
-router.route('/').get(async (req: express.Request, res: express.Response) => {
+router.route('/').get(async (_req: express.Request, res: express.Response) => {
   const users = await getAll();
 
   return res.status(StatusCodes.OK).json(users.map( User.toResponse ) );

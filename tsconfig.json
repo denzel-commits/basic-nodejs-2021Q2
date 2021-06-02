@@ -2,8 +2,8 @@
     "compilerOptions": {
       "sourceMap": true,
       "target": "es2020",
-      "module": "es2020",
-      "allowJs": true,
+      "module": "commonjs",
+      "allowJs": false,
       "outDir": "./build",
       "rootDir": "./src",
       "downlevelIteration": false,
@@ -26,6 +26,6 @@
       "node_modules/"
     ],
     "include": [
-      "src/**/*"
+      "src/**/*.ts"
    ]
   }

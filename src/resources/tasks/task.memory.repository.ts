@@ -4,7 +4,7 @@
 
 import { Task } from './task.model';
 
-function ensure<User>(argument: User | undefined | null, message = 'This value was promised to be there.'): User {
+function ensure<Task>(argument: Task | undefined | null, message = 'This value was promised to be there.'): Task {
   if (argument === undefined || argument === null) {
     throw new TypeError(message);
   }
@@ -37,7 +37,8 @@ const getAllByUserId = async (userId:string): Promise<Task[]> =>
  *
  * @returns {Promise<Task>} Created task
  */
-const create = async (boardId:string, task:Task): Promise<Task> => {
+const create = async (boardId: string, task: Task): Promise<Task> => {
+
   const newTask = new Task(boardId, task);
   tasksTable.push(newTask);
 

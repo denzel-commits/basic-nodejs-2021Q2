@@ -61,7 +61,7 @@ const deleteUser = async (id: string):Promise<boolean> => {
 
   userTasks.forEach( (task:Task) => {
     const curTask = task;
-    curTask.userId = '';
+    curTask.userId = null;
     void updateTask(task.boardId, task.id, curTask);
 
   });

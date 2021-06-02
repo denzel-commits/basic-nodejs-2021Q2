@@ -1,18 +1,17 @@
 import express from 'express';
 import swaggerUI, { JsonObject } from 'swagger-ui-express';
-import path, { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import path from 'path';
 import YAML from 'yamljs';
 import {router as userRouter} from './resources/users/user.router';
 import {router as boardRouter} from './resources/boards/board.router';
 import {router as taskRouter} from './resources/tasks/task.router';
 
-const DIR_NAME = dirname(fileURLToPath(import.meta.url));
+const DIR_NAME =  path.resolve(path.dirname(''));
 
 const app = express();
-const swaggerDocument = YAML.load(path.join(DIR_NAME, '../doc/api.yaml')) as JsonObject;
+const swaggerDocument = YAML.load(path.join(DIR_NAME, './doc/api.yaml')) as JsonObject;
 
-app.use(express);
+app.use(express.json());
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
