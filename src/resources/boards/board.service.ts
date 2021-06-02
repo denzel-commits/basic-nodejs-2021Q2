@@ -2,29 +2,31 @@
  * @module Board service
  */
 
-import boardsRepo from './board.memory.repository';
-import tasksService from '../tasks/task.service';
+import { getAll as getAllBoards, create, read, update, remove} from './board.memory.repository';
+import { getAll as getAllTasks, deleteTask } from '../tasks/task.service';
+
+import { Board } from './board.model';
 
 /**
  * Get all boards
  *
  * @returns {Promise<Board[]>} All boards
  */
-const getAll = () => boardsRepo.getAll();
+const getAll = ():Promise<Board[]> => getAllBoards();
 
 /**
  * Get board by id
  * @param {String} id - Board id
  * @returns {Promise<Board>} Returns boad object
  */
-const getById = (id) => boardsRepo.read(id);
+const getById = (id:string):Promise<Board> => read(id);
 
 /**
  * Create new board with given board info
  * @param {Board} user - Board info
  * @returns {Promise<Board>} Returns created board
  */
-const createBoard = (board) => boardsRepo.create(board);
+const createBoard = (board:Board):Promise<Board> => create(board);
 
 /**
  * Update board by id
@@ -32,12 +34,12 @@ const createBoard = (board) => boardsRepo.create(board);
  * @param {Board} board - Board info to update to
  * @returns {Promise<Boolean>} Returns "true" on success and "false" if board does not exist
  */
-const updateBoard = async (id, board) => {
-  const foundboard = await boardsRepo.read(id);
+const updateBoard = async (id:string, board:Board):Promise<boolean> => {
+  const foundboard = await read(id);
 
   if (foundboard === undefined) return false;
 
-  boardsRepo.update(id, board);
+  await update(id, board);
 
   return true;
 };
@@ -45,21 +47,21 @@ const updateBoard = async (id, board) => {
 /**
  * Delete board by id and delete all its tasks
  * @param {String} id - Board id to delete
- * @returns {Promise<void>} Returns nothing
+ * @returns {Promise<Boolean>} Returns true on success
  */
-const deleteBoard = async (id) => {
-  const board = await boardsRepo.read(id);
+const deleteBoard = async (id:string): Promise<boolean> => {
+  const board = await read(id);
 
   if (board === undefined) return false;
 
-  boardsRepo.remove(id);
+  await remove(id);
 
   // get all tasks on board
-  const boardTasks = await tasksService.getAll(id);
+  const boardTasks = await getAllTasks(id);
 
   // remove all tasks on board
-  boardTasks.forEach((task) => {
-    tasksService.deleteTask(task.boardId, task.id);
+  boardTasks.forEach( (task) => {
+    void deleteTask(task.boardId, task.id);
   });
 
   return true;

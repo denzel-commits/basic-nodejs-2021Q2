@@ -31,7 +31,6 @@
     "prettier"
   ],
   "rules": {
-    "import/no-named-as-default-member": 0,
     "import/extensions": "off",
     "linebreak-style": "off",
     "node/no-unsupported-features/es-syntax": "off",
