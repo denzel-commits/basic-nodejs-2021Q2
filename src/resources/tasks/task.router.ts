@@ -27,19 +27,14 @@ router.route('/:taskId').get(async (req: express.Request, res: express.Response)
       .json({ error: ReasonPhrases.BAD_REQUEST });  
   }
 
-  let task: Task;
   try{
-     task = await getById( boardId, taskId );
-  }catch(e){
+    const task = await getById( boardId, taskId );
+    return res.status(StatusCodes.OK).json(Task.toResponse(task));
+  }catch(err){
     return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
-  }
-/*
-  if (task === undefined) {
-    return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
-  } 
-  */  
-  return res.status(StatusCodes.OK).json(Task.toResponse(task));
-  
+  };
+
+ 
 });
 
 router.route('/').post(async (req: express.Request, res: express.Response) => {

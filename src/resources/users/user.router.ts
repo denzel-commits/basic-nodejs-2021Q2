@@ -18,13 +18,14 @@ router.route('/:id').get(async (req: express.Request, res: express.Response) => 
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });
 
-  const user = await getById(id);
-
-  if (user === undefined) {
+  try{
+    const user = await getById(id);
+    return res.status(StatusCodes.OK).json(User.toResponse(user)); 
+  }catch(e){
     return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
-  } 
+  }
   
-  return res.status(StatusCodes.OK).json(User.toResponse(user));  
+  
 });
 
 router.route('/').post(async (req: express.Request, res: express.Response) => {
