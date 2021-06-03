@@ -12,26 +12,7 @@ function ensure<Task>(argument: Task | undefined | null, message = 'This value w
   return argument;
 }
 
-const tasksTable: Task[] = [
-  {
-    id: 'taskid',
-    title: 'title',
-    order: 3,
-    description: 'desc', 
-    userId: 'userid',
-    boardId: 'boardId3',
-    columnId: 'columnId'
- },
- {
-  id: '91f97684-1b50-46ef-b769-7c4f8f70bd68',
-  title: 'Autotest task',
-  order: 0,
-  description: 'Lorem ipsum',
-  userId: null,
-  boardId: '8664bdbb-fda2-4561-b45c-5a868d7d444b',
-  columnId: null
-  }
-];
+const tasksTable: Task[] = [];
 
 /**
  * Get all tasks by board id
