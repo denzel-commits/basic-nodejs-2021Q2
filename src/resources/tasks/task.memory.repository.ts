@@ -52,8 +52,7 @@ const create = async (boardId: string, task: Task): Promise<Task> => {
  * @param {String} id - Task id
  * @returns {Promise<Task>} Task object
  */
-const read = async (boardId:string, taskId:string):Promise<Task> =>{
-
+const read = async (boardId:string, taskId:string):Promise<Task>  =>{
 
   const task = tasksTable.find((entry) => entry.id === taskId && entry.boardId === boardId);
 

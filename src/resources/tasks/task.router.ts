@@ -1,5 +1,6 @@
 import express from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+// import { HttpException } from '../../exceptions/HTTPException';
 import { Task } from './task.model';
 import { getAll, getById, createTask, updateTask, deleteTask } from './task.service';
 
@@ -34,7 +35,21 @@ router.route('/:taskId').get(async (req: express.Request, res: express.Response)
     return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
   };
 
- 
+  // try{
+  //   const task = await getById( boardId, taskId );
+
+  //   if(task){
+  //     return res.status(StatusCodes.OK).json(Task.toResponse(task));
+  //   }      
+
+  //   next(new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND));
+
+  // }catch(e){
+  //   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ReasonPhrases.INTERNAL_SERVER_ERROR);
+  // }
+
+  // return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ReasonPhrases.INTERNAL_SERVER_ERROR);
+
 });
 
 router.route('/').post(async (req: express.Request, res: express.Response) => {

@@ -68,7 +68,7 @@ const deleteTask = async (boardId:string, taskId:string):Promise<boolean> => {
   try {
     await remove(boardId, taskId);
   } catch(err) {
-    console.log(err);
+    console.log(err); // TypeError: failed to fetch
   }
 
   return true;
