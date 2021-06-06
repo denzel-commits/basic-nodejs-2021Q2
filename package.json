@@ -5,7 +5,6 @@
     "type": "git",
     "url": ""
   },
-  
   "description": "REST service starter for RS School",
   "main": "src/server.ts",
   "scripts": {
@@ -47,13 +46,15 @@
   "dependencies": {
     "cross-env": "7.0.3",
     "dotenv": "9.0.0",
+    "chalk": "4.1.1",
     "esm": "3.2.25",
     "express": "4.17.1",
     "http-status-codes": "2.1.4",
     "swagger-ui-express": "4.1.6",
     "ts-node": "10.0.0",
     "uuid": "8.3.2",
-    "yamljs": "0.3.0"
+    "yamljs": "0.3.0",
+    "winston": "3.3.3"
   },
   "devDependencies": {
     "@types/express": "4.17.12",

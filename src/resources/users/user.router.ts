@@ -1,5 +1,6 @@
 import express from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import { HttpException } from '../../exceptions/HTTPException';
 import { User } from './user.model';
 import { getAll, getById, createUser, updateUser, deleteUser } from './user.service';
 
@@ -11,20 +12,21 @@ router.route('/').get(async (_req: express.Request, res: express.Response) => {
   return res.status(StatusCodes.OK).json(users.map( User.toResponse ) );
 });
 
-router.route('/:id').get(async (req: express.Request, res: express.Response) => {
+router.route('/:id').get(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const {id} = req.params;
-  if (id === undefined)
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: ReasonPhrases.BAD_REQUEST });
+  if (id === undefined){
+    next(new HttpException(StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST));    
+    return; 
+  }    
 
-  try{
-    const user = await getById(id);
-    return res.status(StatusCodes.OK).json(User.toResponse(user)); 
-  }catch(e){
-    return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
-  }
+  const user = await getById(id);
+
+  if(user){
+    res.status(StatusCodes.OK).json(User.toResponse(user));
+    return;
+  }  
   
+  next(new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND));
   
 });
 

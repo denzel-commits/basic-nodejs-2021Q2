@@ -1,6 +1,6 @@
 import express from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-// import { HttpException } from '../../exceptions/HTTPException';
+import { HttpException } from '../../exceptions/HTTPException';
 import { Task } from './task.model';
 import { getAll, getById, createTask, updateTask, deleteTask } from './task.service';
 
@@ -20,36 +20,26 @@ router.route('/').get(async (req: express.Request, res: express.Response) => {
   return res.status(StatusCodes.OK).json(tasks.map((task) => Task.toResponse(task)));
 });
 
-router.route('/:taskId').get(async (req: express.Request, res: express.Response) => {
+router.route('/:taskId').get(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const {boardId, taskId} = req.params;
   if (boardId === undefined || taskId === undefined) {
-    return res
+    res
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: ReasonPhrases.BAD_REQUEST });  
+    
+      return;
   }
 
-  try{
-    const task = await getById( boardId, taskId );
-    return res.status(StatusCodes.OK).json(Task.toResponse(task));
-  }catch(err){
-    return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
-  };
+  const task = await getById( boardId, taskId );
 
-  // try{
-  //   const task = await getById( boardId, taskId );
+  throw new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND);
 
-  //   if(task){
-  //     return res.status(StatusCodes.OK).json(Task.toResponse(task));
-  //   }      
-
-  //   next(new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND));
-
-  // }catch(e){
-  //   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ReasonPhrases.INTERNAL_SERVER_ERROR);
-  // }
-
-  // return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ReasonPhrases.INTERNAL_SERVER_ERROR);
-
+  if(task === null){
+    next(new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND));
+    return;
+  }  
+  
+  // res.status(StatusCodes.OK).json(Task.toResponse(task));
 });
 
 router.route('/').post(async (req: express.Request, res: express.Response) => {

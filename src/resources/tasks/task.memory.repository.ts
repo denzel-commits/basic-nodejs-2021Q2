@@ -50,14 +50,13 @@ const create = async (boardId: string, task: Task): Promise<Task> => {
  *
  * @param {String} id - Board id
  * @param {String} id - Task id
- * @returns {Promise<Task>} Task object
+ * @returns {Promise<Task | null>} Task object
  */
-const read = async (boardId:string, taskId:string):Promise<Task>  =>{
+const read = async (boardId:string, taskId:string):Promise<Task | null>  =>{
 
   const task = tasksTable.find((entry) => entry.id === taskId && entry.boardId === boardId);
 
-  if (!task) { throw new Error('NOT_FOUND') }
-  else return task;
+  return task ?? null;
 
 }
 
