@@ -67,3 +67,4 @@
 {"message":"[Sun, 06 Jun 2021 20:23:09 GMT] DELETE: /boards/bba9fdd0-4f6e-48a9-808b-f9cbba5b7e32/tasks/9b16ec86-8a2b-497c-ab31-14a76a3fd514 Query params: {} Body: {} Response Status Code: 204 [1ms]","level":"info","service":"user-service"}
 {"message":"[Sun, 06 Jun 2021 20:23:09 GMT] GET: /boards/bba9fdd0-4f6e-48a9-808b-f9cbba5b7e32/tasks/9b16ec86-8a2b-497c-ab31-14a76a3fd514 Query params: {} Body: {} Response Status Code: 404 [1ms]","level":"info","service":"user-service"}
 {"message":"[Sun, 06 Jun 2021 20:23:09 GMT] DELETE: /boards/bba9fdd0-4f6e-48a9-808b-f9cbba5b7e32 Query params: {} Body: {} Response Status Code: 204 [1ms]","level":"info","service":"user-service"}
+{"message":"[Sun, 06 Jun 2021 20:26:18 GMT] GET: /boards/2/tasks/3?id=5&qparam=tyu2 Query params: {\"id\":\"5\",\"qparam\":\"tyu2\"} Body: {} Response Status Code: 404 [1ms]","level":"info","service":"user-service"}
