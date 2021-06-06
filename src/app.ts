@@ -2,7 +2,6 @@ import express from 'express';
 import swaggerUI, { JsonObject } from 'swagger-ui-express';
 import path from 'path';
 import YAML from 'yamljs';
-import fs from 'fs';
 import { errorMiddleware } from './middleware/error.middleware';
 import { router as userRouter } from './resources/users/user.router';
 import { router as boardRouter } from './resources/boards/board.router';
@@ -34,24 +33,5 @@ app.use('/boards', boardRouter);
 app.use('/boards/:boardId/tasks', taskRouter);
 
 app.use(errorMiddleware);
-
-process
-  .on('unhandledRejection', (reason, p) => {
-    console.error(reason, 'Unhandled Rejection at Promise', p);
-
-    const state = {reason, p};
-
-   fs.writeFileSync("error.log", `Unhandled Rejection at Promise: ${JSON.stringify(state)}` + 
-   ` Exception origin: ${JSON.stringify(p)}\n`, { flag: "a+" });
-
-    // process.exit(1);
-  })
-  .on('uncaughtException', error => {
-
-    console.error(error, 'Uncaught Exception thrown');
-    fs.writeFileSync("error.log", error.message, { flag: "a+" });
-
-    process.exit(1);
-  });
 
 export { app };

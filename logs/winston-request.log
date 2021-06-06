@@ -1,0 +1,2 @@
+{"message":"[Sun, 06 Jun 2021 19:47:25 GMT] GET: /boards/2/tasks/3?id=5&qparam=tyu2 Query params: {\"id\":\"5\",\"qparam\":\"tyu2\"} Body: {} Response Status Code: 200 [1694ms]","level":"info","service":"user-service"}
+{"message":"[Sun, 06 Jun 2021 19:52:53 GMT] GET: /boards/2/tasks/3?id=5&qparam=tyu2 Query params: {\"id\":\"5\",\"qparam\":\"tyu2\"} Body: {} Response Status Code: 200 [12165ms]","level":"info","service":"user-service"}

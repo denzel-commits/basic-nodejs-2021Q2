@@ -1,1 +1,2 @@
 Unhandled Rejection at Promise: {"reason":{"status":404},"p":{}} Exception origin: {}
+ENOENT: no such file or directory, mkdir '/logs'
