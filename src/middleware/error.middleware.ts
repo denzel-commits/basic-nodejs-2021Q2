@@ -25,8 +25,6 @@ import { HttpException } from '../exceptions/HTTPException';
 
   const errorLog = 'winston-error.log';
 
-  // const logFormat = winston.format.printf(info => `${info['timestamp']} ${info.level}: ${info.message}`);
-
   const errorLogger = winston.createLogger({
     level: 'error',
     format: winston.format.combine(

@@ -14,6 +14,7 @@ router.route('/').get(async (_req: express.Request, res: express.Response) => {
 
 router.route('/:id').get(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const {id} = req.params;
+
   if (id === undefined){
     next(new HttpException(StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST));    
     return; 
@@ -21,63 +22,61 @@ router.route('/:id').get(async (req: express.Request, res: express.Response, nex
 
   const user = await getById(id);
 
-  if(user){
-    res.status(StatusCodes.OK).json(User.toResponse(user));
+  if(user === null){
+    next(new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND));
     return;
   }  
   
-  next(new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND));
   
+  res.status(StatusCodes.OK).json(User.toResponse(user));  
 });
 
-router.route('/').post(async (req: express.Request, res: express.Response) => {
-  if (req.body === undefined) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: ReasonPhrases.BAD_REQUEST });
-  }
+router.route('/').post(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+
+  if (req.body === undefined){
+    next(new HttpException(StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST));    
+    return; 
+  }    
 
   const user = await createUser(req.body);
 
-  return res.status(StatusCodes.CREATED).json(User.toResponse(user));
+  res.status(StatusCodes.CREATED).json(User.toResponse(user));
 });
 
-router.route('/:id').put(async (req: express.Request, res: express.Response) => {
+router.route('/:id').put(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const {id} = req.params;
 
-  if (id === undefined || req.body === undefined) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: ReasonPhrases.BAD_REQUEST });
-  }
+  if (id === undefined || req.body === undefined){
+    next(new HttpException(StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST));    
+    return; 
+  }    
 
   const result = await updateUser(id, req.body);
 
   if (!result) {
-    return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
+    next(new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND));
+    return;
   } 
   
-  return res.status(StatusCodes.OK).json({ message: `User successfully updated` });  
+  res.status(StatusCodes.OK).json({ message: `User successfully updated` });  
 });
 
-router.route('/:id').delete(async (req: express.Request, res: express.Response) => {
+router.route('/:id').delete(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const {id} = req.params;
 
-  if (id === undefined) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: ReasonPhrases.BAD_REQUEST });
-  }
+  if (id === undefined){
+    next(new HttpException(StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST));    
+    return; 
+  }  
 
   const result = await deleteUser(id);
 
   if (!result) {
-    return res.status(StatusCodes.NOT_FOUND).json({ error: ReasonPhrases.NOT_FOUND });
+    next(new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND));
+    return;
   } 
     
-  return res
-      .status(StatusCodes.NO_CONTENT)
-      .json({ message: ReasonPhrases.NO_CONTENT });
+  res.status(StatusCodes.NO_CONTENT).json({ message: ReasonPhrases.NO_CONTENT });
   
 });
 
