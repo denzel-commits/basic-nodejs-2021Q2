@@ -23,22 +23,21 @@ import { HttpException } from '../exceptions/HTTPException';
     next(error);
   }
 
+  process.on('unhandledRejection', (reason, p) => {   
+
+    console.error(reason, 'Unhandled Rejection at Promise', p);
+       
+    winstonLogger.error(reason);      
   
-  process.on('unhandledRejection', (reason, p) => {
-
-     console.error(reason, 'Unhandled Rejection at Promise', p);
-    
-     winstonLogger.error(reason);      
-
-      process.exit(1);
+    process.exit(1);
   });
-
+  
   process.on('uncaughtException', error => {
-
+  
     console.error(error, 'Uncaught Exception thrown');
-
+  
     winstonLogger.error(error);
-
+  
     process.exit(1);
   });
 

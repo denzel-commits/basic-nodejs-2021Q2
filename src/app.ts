@@ -8,7 +8,6 @@ import { router as boardRouter } from './resources/boards/board.router';
 import { router as taskRouter } from './resources/tasks/task.router';
 import { loggerMiddleware } from './middleware/logger.middleware';
 
-
 const DIR_NAME =  path.resolve(path.dirname(''));
 
 const app = express();

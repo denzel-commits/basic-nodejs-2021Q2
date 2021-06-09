@@ -1,15 +1,16 @@
 import winston from 'winston';
 
 const errorLog = 'winston-error.log';
-const requestLog = 'winston-error.log';
+const requestLog = 'winston-request.log';
 
 const winstonLogger = winston.createLogger({
-    level: 'error',
+    level: 'info',
     format: winston.format.combine(
       winston.format.timestamp({
         format: 'YYYY-MM-DD HH:mm:ss'
       }),
-      winston.format.json()),
+      winston.format.json()
+    ),
     defaultMeta: { service: 'user-service' },
     transports: [
     new winston.transports.File({ filename: `./logs/${requestLog}`, level: 'info' }),    

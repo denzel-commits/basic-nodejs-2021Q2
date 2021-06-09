@@ -1,18 +1,22 @@
 import express from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import { promiseWrapper } from '../../common/promise.wrapper';
 import { HttpException } from '../../exceptions/HTTPException';
 import { User } from './user.model';
 import { getAll, getById, createUser, updateUser, deleteUser } from './user.service';
 
 const router = express.Router();
 
-router.route('/').get(async (_req: express.Request, res: express.Response) => {
+router.route('/').get(
+  promiseWrapper(async (_req: express.Request, res: express.Response) => {
   const users = await getAll();
 
-  return res.status(StatusCodes.OK).json(users.map( User.toResponse ) );
-});
+  res.status(StatusCodes.OK).json(users.map( User.toResponse ) );
+  
+}));
 
-router.route('/:id').get(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+router.route('/:id').get(
+  promiseWrapper(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const {id} = req.params;
 
   if (id === undefined){
@@ -27,11 +31,12 @@ router.route('/:id').get(async (req: express.Request, res: express.Response, nex
     return;
   }  
   
-  
   res.status(StatusCodes.OK).json(User.toResponse(user));  
-});
+}));
 
-router.route('/').post(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+router.route('/').post(
+  promiseWrapper(
+    async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
   if (req.body === undefined){
     next(new HttpException(StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST));    
@@ -41,9 +46,10 @@ router.route('/').post(async (req: express.Request, res: express.Response, next:
   const user = await createUser(req.body);
 
   res.status(StatusCodes.CREATED).json(User.toResponse(user));
-});
+}));
 
-router.route('/:id').put(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+router.route('/:id').put(
+  promiseWrapper(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const {id} = req.params;
 
   if (id === undefined || req.body === undefined){
@@ -59,9 +65,10 @@ router.route('/:id').put(async (req: express.Request, res: express.Response, nex
   } 
   
   res.status(StatusCodes.OK).json({ message: `User successfully updated` });  
-});
+}));
 
-router.route('/:id').delete(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+router.route('/:id').delete(
+  promiseWrapper(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const {id} = req.params;
 
   if (id === undefined){
@@ -78,6 +85,6 @@ router.route('/:id').delete(async (req: express.Request, res: express.Response, 
     
   res.status(StatusCodes.NO_CONTENT).json({ message: ReasonPhrases.NO_CONTENT });
   
-});
+}));
 
 export { router };
