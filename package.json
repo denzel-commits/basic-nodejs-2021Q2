@@ -9,7 +9,7 @@
   "main": "src/server.ts",
   "scripts": {
     "start": "nodemon",
-    "startjs": "node ./build/server.js",
+    "start:js": "node ./build/server.js",
     "build": "tsc && node --unhandled-rejections=strict ./build/app.js",
     "lint": "eslint --ext .js,.ts --fix src/",
     "doc": "./node_modules/.bin/jsdoc -r -c jsdoc.json -R README.md",
