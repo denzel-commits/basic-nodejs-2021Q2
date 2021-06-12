@@ -12,6 +12,8 @@ services:
       - postgres
     environment:
       - PORT=${PORT}
+    networks:
+      - dockernet
 
   postgres:
     build: ./database/
@@ -25,6 +27,15 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - dockernet
+
+networks:
+  dockernet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.111.0/24
 
 volumes:
   postgres_data:
