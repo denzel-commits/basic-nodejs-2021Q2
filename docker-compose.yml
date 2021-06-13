@@ -5,8 +5,8 @@ services:
     image: denzeldocker/docker-nodeapp
     restart: always
     volumes:
-      - ./src:/usr/app/src/
-      - ./logs:/usr/app/logs/
+      - .:/usr/app
+      - /usr/app/node_modules
     command: npm start
     ports:
       - ${PORT}:${PORT}
