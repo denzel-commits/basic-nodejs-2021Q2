@@ -2,6 +2,7 @@ version: '3'
 services:
   node:
     build: .
+    image: denzeldocker/docker-nodeapp
     restart: always
     volumes:
       - ./src:/usr/app/src/
@@ -18,6 +19,7 @@ services:
 
   postgres:
     build: ./database/
+    image: denzeldocker/docker-postgres
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data
