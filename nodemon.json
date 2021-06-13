@@ -2,5 +2,6 @@
     "ignore": ["node_modules"],
     "watch": ["./src/**/*.ts"],
     "exec": "ts-node src/server.ts",
-    "ext": "ts"
+    "ext": "ts",
+    "exitcrash": true
 }
