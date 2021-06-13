@@ -1,7 +1,8 @@
 FROM node:14.17-alpine3.13
+ARG PORT=4000
 WORKDIR /usr/app
 COPY package*.json .
 RUN npm install
 COPY . .
-EXPOSE 4000:4000
+EXPOSE $PORT
 CMD [ "npm", "start" ]

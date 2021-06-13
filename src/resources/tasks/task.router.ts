@@ -34,7 +34,7 @@ router.route('/:taskId').get(
 
 
    if(task === null){
-      next(new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND));
+      next( new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND));
       return;
    }  
   
