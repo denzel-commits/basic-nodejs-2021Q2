@@ -3,9 +3,10 @@ services:
   node:
     build: .
     image: denzeldocker/docker-nodeapp
-    restart: always
+    restart: on-failure
     volumes:
-      - ./:/usr/app
+      - ./src:/usr/app/src/
+      - ./logs:/usr/app/logs/
       - /usr/app/node_modules
     command: npm start
     ports:
@@ -20,7 +21,7 @@ services:
   postgres:
     build: ./database/
     image: denzeldocker/docker-postgres
-    restart: always
+    restart: on-failure
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - postgres_logs:/logs:z

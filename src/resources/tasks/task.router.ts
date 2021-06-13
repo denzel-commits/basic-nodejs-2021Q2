@@ -33,8 +33,8 @@ router.route('/:taskId').get(
   const task = await getById( boardId, taskId ); 
 
 
-   if(task === null){
-      next( new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND));
+   if(task === null){ 
+      next(new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND));
       return;
    }  
   

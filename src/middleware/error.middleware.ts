@@ -25,15 +25,17 @@ import { HttpException } from '../exceptions/HTTPException';
     console.error(reason, 'Unhandled Rejection at Promise', p);
        
     winstonLogger.error(reason);      
-  
+    
     process.exit(1);
   });
   
   process.on('uncaughtException', error => {
 
     winstonLogger.error(error.message);
-  
+
     process.exit(1);
+      
   });
+
 
 export { errorMiddleware };

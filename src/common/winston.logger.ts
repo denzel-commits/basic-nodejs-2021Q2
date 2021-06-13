@@ -11,12 +11,12 @@ const winstonLogger = winston.createLogger({
       }),
       winston.format.json()
     ),
-    defaultMeta: { service: 'user-service' },
+    defaultMeta: { service: 'rest-service' },
     transports: [
     new winston.transports.File({ filename: `./logs/${requestLog}`, level: 'info' }),    
     new winston.transports.File({ filename: `./logs/${errorLog}`, level: 'error' }),
-    ],
-    exitOnError: true,
+    ],  
+    exitOnError: true  
 });
 
 winstonLogger.add(new winston.transports.Console({
