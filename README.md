@@ -19,6 +19,15 @@ npm install
 
 ## Running application
 
+.env file should be created in root app directory with the following format
+
+NODE_ENV=development
+PORT=4000
+POSTGRES_PORT=5432
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=postgres
+
 ```
 docker-compose up
 ```
