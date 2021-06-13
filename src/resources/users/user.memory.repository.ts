@@ -37,9 +37,15 @@ const create = async (user: User): Promise<User> => {
 /**
  * Get user data from database by user id
  * @param {String} id - User id
- * @returns {Promise<User>} User info
+ * @returns {Promise<User | null>} User info
  */
-const read = async (id:string):Promise<User> => ensure(usersTable.find((entry) => entry.id === id));
+const read = async (id:string):Promise<User | null> => {
+ 
+ const user = usersTable.find((entry) => entry.id === id);
+
+ return user ?? null;
+
+}
 
 /**
  * Update user data in database

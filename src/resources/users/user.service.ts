@@ -19,7 +19,7 @@ const getAll = ():Promise<User[]> => getAllDBUsers();
  * @param {String} id - User id
  * @returns {Promise<User>} Returns user object
  */
-const getById = (id:string):Promise<User> => readDBUser(id);
+const getById = (id:string):Promise<User | null> => readDBUser(id);
 
 /**
  * Create new user with given user info

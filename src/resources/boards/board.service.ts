@@ -19,7 +19,7 @@ const getAll = ():Promise<Board[]> => getAllBoards();
  * @param {String} id - Board id
  * @returns {Promise<Board>} Returns boad object
  */
-const getById = (id:string):Promise<Board> => read(id);
+const getById = (id:string):Promise<Board | null> => read(id);
 
 /**
  * Create new board with given board info

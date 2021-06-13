@@ -23,9 +23,9 @@ const getAllByUserId = (userId:string):Promise<Task[]> => getAllDBByUserId(userI
  * Get task by board id and task id
  * @param {String} boardId - Board id
  * @param {String} taskId - Task id
- * @returns {Promise<Task>} Returns task object
+ * @returns {Promise<Task | null>} Returns task object
  */
-const getById = (boardId:string, taskId:string):Promise<Task> => read(boardId, taskId);
+const getById = (boardId:string, taskId:string):Promise<Task | null> => read(boardId, taskId);
 
 /**
  * Create new task on the board
@@ -68,7 +68,7 @@ const deleteTask = async (boardId:string, taskId:string):Promise<boolean> => {
   try {
     await remove(boardId, taskId);
   } catch(err) {
-    console.log(err);
+    console.log(err); // TypeError: failed to fetch
   }
 
   return true;
