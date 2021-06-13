@@ -2,11 +2,10 @@ import express from 'express';
 import swaggerUI, { JsonObject } from 'swagger-ui-express';
 import path from 'path';
 import YAML from 'yamljs';
-import { errorMiddleware } from './middleware/error.middleware';
+import { errorMiddleware, loggerMiddleware } from './middleware';
 import { router as userRouter } from './resources/users/user.router';
 import { router as boardRouter } from './resources/boards/board.router';
 import { router as taskRouter } from './resources/tasks/task.router';
-import { loggerMiddleware } from './middleware/logger.middleware';
 
 const DIR_NAME =  path.resolve(path.dirname(''));
 
