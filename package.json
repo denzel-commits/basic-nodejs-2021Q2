@@ -8,7 +8,7 @@
   "description": "REST service starter for RS School",
   "main": "src/server.ts",
   "scripts": {
-    "start": "nodemon",
+    "start": "nodemon --exitcrash",
     "start:js": "node ./build/server.js",
     "build": "tsc && node --unhandled-rejections=strict ./build/app.js",
     "lint": "eslint --ext .js,.ts --fix src/",

@@ -2,9 +2,10 @@ version: '3'
 services:
   node:
     build: .
-    restart: on-failure
+    restart: always
     volumes:
       - ./src:/usr/app/src/
+      - ./logs:/usr/app/logs/
     command: npm start
     ports:
       - ${PORT}:${PORT}
@@ -17,7 +18,7 @@ services:
 
   postgres:
     build: ./database/
-    restart: on-failure
+    restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - postgres_logs:/logs:z

@@ -30,6 +30,7 @@ app.use(loggerMiddleware);
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 app.use('/boards/:boardId/tasks', taskRouter);
+app.use('/failed', () => process.exit(2));
 
 app.use(errorMiddleware);
 

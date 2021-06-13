@@ -16,7 +16,6 @@ import { HttpException } from '../exceptions/HTTPException';
     }
 
     winstonLogger.error(error.message);
-    return;
 
     next();
   }
@@ -31,10 +30,8 @@ import { HttpException } from '../exceptions/HTTPException';
   });
   
   process.on('uncaughtException', error => {
-  
-    console.error(error, 'Uncaught Exception thrown');
-  
-    winstonLogger.error(error);
+
+    winstonLogger.error(error.message);
   
     process.exit(1);
   });
