@@ -34,13 +34,13 @@ services:
     networks:
       - dockernet
 
+volumes:
+  postgres_data:
+  postgres_logs:
+
 networks:
   dockernet:
     driver: bridge
     ipam:
       config:
         - subnet: 192.168.111.0/24
-
-volumes:
-  postgres_data:
-  postgres_logs:

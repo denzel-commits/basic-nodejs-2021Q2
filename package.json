@@ -10,7 +10,7 @@
   "scripts": {
     "start": "nodemon",
     "start:js": "node ./build/server.js",
-    "build": "tsc && node --unhandled-rejections=strict ./build/app.js",
+    "build": "tsc",
     "lint": "eslint --ext .js,.ts --fix src/",
     "doc": "./node_modules/.bin/jsdoc -r -c jsdoc.json -R README.md",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
