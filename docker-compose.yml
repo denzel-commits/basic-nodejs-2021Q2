@@ -1,0 +1,46 @@
+version: '3'
+services:
+  node:
+    build: .
+    image: denzeldocker/docker-nodeapp
+    restart: on-failure
+    volumes:
+      - ./src:/usr/app/src/
+      - ./logs:/usr/app/logs/
+      - /usr/app/node_modules
+    command: npm start
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - postgres
+    environment:
+      - PORT=${PORT}
+    networks:
+      - dockernet
+
+  postgres:
+    build: ./database/
+    image: denzeldocker/docker-postgres
+    restart: on-failure
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_logs:/logs:z
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - dockernet
+
+networks:
+  dockernet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.111.0/24
+
+volumes:
+  postgres_data:
+  postgres_logs:

@@ -1,18 +1,21 @@
 import express from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import { promiseWrapper } from '../../common/promise.wrapper';
 import { HttpException } from '../../exceptions/HTTPException';
 import { Board } from './board.model';
 import { getAll, getById, createBoard, updateBoard, deleteBoard } from './board.service';
 
 const router = express.Router();
 
-router.route('/').get(async (_req: express.Request, res: express.Response) => {
+router.route('/').get(
+  promiseWrapper(async (_req: express.Request, res: express.Response) => {
   const boards = await getAll();
 
   res.json(boards.map(Board.toResponse));
-});
+}));
 
-router.route('/:boardId').get(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+router.route('/:boardId').get(
+  promiseWrapper(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const {boardId} = req.params;
 
   if (boardId === undefined){
@@ -29,9 +32,10 @@ router.route('/:boardId').get(async (req: express.Request, res: express.Response
   
   res.status(StatusCodes.OK).json(Board.toResponse(board));
     
-});
+}));
 
-router.route('/').post(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+router.route('/').post(
+  promiseWrapper(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
   if (Object.entries(req.body).length === 0){
     next(new HttpException(StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST));    
@@ -41,9 +45,10 @@ router.route('/').post(async (req: express.Request, res: express.Response, next:
   const board = await createBoard(req.body);
 
   res.status(StatusCodes.CREATED).json(Board.toResponse(board));
-});
+}));
 
-router.route('/:boardId').put(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+router.route('/:boardId').put(
+  promiseWrapper(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const {boardId} = req.params;
 
   if (boardId === undefined){
@@ -59,9 +64,10 @@ router.route('/:boardId').put(async (req: express.Request, res: express.Response
   } 
   
   res.status(StatusCodes.OK).json({ message: `Board successfully updated` });  
-});
+}));
 
-router.route('/:boardId').delete(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+router.route('/:boardId').delete(
+  promiseWrapper(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const {boardId} = req.params;
 
   if (boardId === undefined){
@@ -78,6 +84,6 @@ router.route('/:boardId').delete(async (req: express.Request, res: express.Respo
   
   res.status(StatusCodes.NO_CONTENT).json({ message: `Board successfully deleted` });
   
-});
+}));
 
 export { router };

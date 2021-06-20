@@ -1,5 +1,0 @@
-
-[Sun, 06 Jun 2021 18:16:28 GMT] GET: /boards/2/tasks/3?id=5&qparam=tyu2 Query params: {"id":"5","qparam":"tyu2"} Body: {} Response Status Code: 200 [617ms]
-[Sun, 06 Jun 2021 18:16:29 GMT] GET: /boards/2/tasks/3?id=5&qparam=tyu2 Query params: {"id":"5","qparam":"tyu2"} Body: {} Response Status Code: 200 [813ms]
-[Sun, 06 Jun 2021 18:16:30 GMT] GET: /boards/2/tasks/3?id=5&qparam=tyu2 Query params: {"id":"5","qparam":"tyu2"} Body: {} Response Status Code: 200 [890ms]
-[Sun, 06 Jun 2021 18:38:44 GMT] GET: /boards/2/tasks/3?id=5&qparam=tyu2 Query params: {"id":"5","qparam":"tyu2"} Body: {} Response Status Code: 200 [1262ms]

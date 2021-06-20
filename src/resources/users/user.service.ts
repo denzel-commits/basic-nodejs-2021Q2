@@ -59,6 +59,7 @@ const deleteUser = async (id: string):Promise<boolean> => {
 
   const userTasks = await getAllByUserId(id);
 
+
   userTasks.forEach( (task:Task) => {
     const curTask = task;
     curTask.userId = null;

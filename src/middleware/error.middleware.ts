@@ -1,45 +1,41 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { NextFunction, Request, Response } from 'express';
+import { ErrorRequestHandler } from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { winstonLogger } from '../common/winston.logger';
 import { HttpException } from '../exceptions/HTTPException';
 
-  function errorMiddleware(error: Error | HttpException, _request: Request, response: Response, next: NextFunction): void {
+  const  errorMiddleware: ErrorRequestHandler = (error: Error | HttpException, _request, response, next) => {
       
     if(error instanceof HttpException){
-      const status = error.status || StatusCodes.INTERNAL_SERVER_ERROR;
-      const message = error.message || ReasonPhrases.INTERNAL_SERVER_ERROR;
+      const {status, message} = error;
+      response.status(status).json({status, message});    
+    }else {
+      const status = StatusCodes.INTERNAL_SERVER_ERROR;
+      const message = ReasonPhrases.INTERNAL_SERVER_ERROR;
 
-      response
-        .status(status)
-        .json({
-          status,
-          message,
-        })
+      response.status(status).json({status, message});
+    }
 
-      return;  
-    }   
+    winstonLogger.error(error.message);
 
-    next(error);
+    next();
   }
 
-  
-  process.on('unhandledRejection', (reason, p) => {
+  process.on('unhandledRejection', (reason, p) => {   
 
-     console.error(reason, 'Unhandled Rejection at Promise', p);
+    console.error(reason, 'Unhandled Rejection at Promise', p);
+       
+    winstonLogger.error(reason);      
     
-     winstonLogger.error(reason);      
-
-      process.exit(1);
-  });
-
-  process.on('uncaughtException', error => {
-
-    console.error(error, 'Uncaught Exception thrown');
-
-    winstonLogger.error(error);
-
     process.exit(1);
   });
+  
+  process.on('uncaughtException', error => {
+
+    winstonLogger.error(error.message);
+
+    process.exit(1);
+      
+  });
+
 
 export { errorMiddleware };
