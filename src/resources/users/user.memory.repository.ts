@@ -7,22 +7,18 @@ import { User } from './user.model';
 
 import {User as UserEntity} from "../../entity/User";
 
-
-const usersTable: User[] = [];
-// function ensure<User>(argument: User | undefined | null, message = 'This value was promised to be there.'): User {
-//   if (argument === undefined || argument === null) {
-//     throw new TypeError(message);
-//   }
-
-//   return argument;
-// }
-
 /**
  * Returns all available users
  *
  * @returns {Promise<User[]>} - All users
  */
-const getAll = async (): Promise<User[]> => usersTable
+const getAll = async (): Promise<User[]> => {
+
+  const userRepository = getRepository(UserEntity); // you can also get it via getConnection().getRepository() or getManager().getRepository()
+  const Users : User[] = await userRepository.find();
+  
+  return Users;
+}
 
 /**
  * Save new user in database
@@ -47,7 +43,7 @@ const create = async (user: User): Promise<User> => {
  */
 const read = async (id:string):Promise<User | null> => {
  
-  const userRepository = getRepository(UserEntity); // you can also get it via getConnection().getRepository() or getManager().getRepository()
+  const userRepository = getRepository(UserEntity);
   const user = await userRepository.findOne(id);
 
   return user ?? null;
