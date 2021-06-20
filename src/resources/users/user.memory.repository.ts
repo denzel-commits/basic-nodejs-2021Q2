@@ -4,8 +4,10 @@
 
 import { User } from './user.model';
 
-const usersTable: User[] = [];
 
+
+
+const usersTable: User[] = [];
 function ensure<User>(argument: User | undefined | null, message = 'This value was promised to be there.'): User {
   if (argument === undefined || argument === null) {
     throw new TypeError(message);
@@ -19,7 +21,7 @@ function ensure<User>(argument: User | undefined | null, message = 'This value w
  *
  * @returns {Promise<User[]>} - All users
  */
-const getAll = async (): Promise<User[]> => usersTable;
+const getAll = async (): Promise<User[]> => usersTable
 
 /**
  * Save new user in database

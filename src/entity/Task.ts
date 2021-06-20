@@ -11,7 +11,7 @@ class Task {
   @Column("smallint")
   public order: number;
  
-  @Column("varchar", {length: 256})
+  @Column("varchar", {length: 255})
   public description: string;
 
   @Column("varchar", {length: 36, nullable: true})
@@ -21,7 +21,7 @@ class Task {
   public boardId: string;
 
   @Column("varchar", {length: 36, nullable: true})
-  public string: string;
+  public columnId: string;
 }
  
 export { Task };

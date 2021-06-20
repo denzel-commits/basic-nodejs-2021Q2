@@ -1,18 +1,16 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { createConnection } from "typeorm";
 import { PORT } from './common/config';
-import { ormconfig } from './common/ormconfig';
 import { app } from './app';
 
-  createConnection(ormconfig)
+createConnection()
   .then( () => { 
-      console.log( 'Database connection is set successfully' );
+      console.log( 'Connected to DB' );
 
-      app.listen(PORT || 4000, () =>
+      app.listen(PORT, () =>
       console.log( `App is running on http://localhost:${PORT}` )
       );
   })
   .catch( (error) =>  {
     console.log('Error while connecting to the database', error);
   });
-

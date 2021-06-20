@@ -1,5 +1,5 @@
 import { ConnectionOptions } from 'typeorm';
-import { POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } from './config';
+import { POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } from './src/common/config';
 
 const ormconfig: ConnectionOptions = {
     type: 'postgres',
@@ -9,16 +9,12 @@ const ormconfig: ConnectionOptions = {
     password: POSTGRES_PASSWORD,
     database: POSTGRES_DB,
     synchronize: false,
-    "entities": [
-        "src/entity/**/*.ts"
-    ],
-    "migrations": [
-         "database/migration/**/*.ts"
-    ],
+    "entities": ["src/entity/*.ts"],
+    "migrations": ["src/migration/*.ts"],
     "cli": {
         "entitiesDir": "src/entity",
-        "migrationsDir": "database/migration",        
+        "migrationsDir": "src/migration",  
     }
 };
 
-export { ormconfig };
+export = ormconfig;
