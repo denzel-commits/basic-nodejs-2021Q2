@@ -9,13 +9,13 @@ import {User as UserEntity} from "../../entity/User";
 
 
 const usersTable: User[] = [];
-function ensure<User>(argument: User | undefined | null, message = 'This value was promised to be there.'): User {
-  if (argument === undefined || argument === null) {
-    throw new TypeError(message);
-  }
+// function ensure<User>(argument: User | undefined | null, message = 'This value was promised to be there.'): User {
+//   if (argument === undefined || argument === null) {
+//     throw new TypeError(message);
+//   }
 
-  return argument;
-}
+//   return argument;
+// }
 
 /**
  * Returns all available users
@@ -60,13 +60,8 @@ const read = async (id:string):Promise<User | null> => {
  * @returns {Promise<void>} Returns nothing
  */
 const update = async (id: string, user: User): Promise<void> => {
-  const index : number = ensure(usersTable.findIndex((entry) => entry.id === id));
-
-  ensure(usersTable[index]).name = user.name;
-  ensure(usersTable[index]).login = user.login;
-  ensure(usersTable[index]).password = user.password;
-
-  
+  const userRepository = getRepository(UserEntity); 
+  await userRepository.save({...user, id});
 };
 
 /**

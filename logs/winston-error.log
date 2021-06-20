@@ -1,2 +1,17 @@
 {"message":"exception","level":"error","service":"user-service","timestamp":"2021-06-13 07:30:21"}
 {"message":"Not Found","level":"error","service":"user-service","timestamp":"2021-06-13 07:46:58"}
+{"message":"This value was promised to be there.","level":"error","service":"rest-service","timestamp":"2021-06-20 20:25:44"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:25:45"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:25:45"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:25:45"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:25:45"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:25:45"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:25:45"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:25:45"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:30:06"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:30:06"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:30:06"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:30:06"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:30:06"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:30:06"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-20 20:30:07"}
