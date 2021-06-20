@@ -1,9 +1,10 @@
-import { POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } from './config';
+import { ConnectionOptions } from 'typeorm';
+import { POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } from './config';
 
-export default {
+const ormconfig: ConnectionOptions = {
     type: 'postgres',
     host: POSTGRES_HOST,
-    port: POSTGRES_PORT,
+    port: 5432,
     username: POSTGRES_USER,
     password: POSTGRES_PASSWORD,
     database: POSTGRES_DB,
@@ -19,3 +20,5 @@ export default {
         "migrationsDir": "database/migration",        
     }
 };
+
+export { ormconfig };

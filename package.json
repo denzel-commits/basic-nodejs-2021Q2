@@ -11,7 +11,7 @@
     "start": "nodemon",
     "start:js": "node ./build/server.js",
     "build": "tsc",
-    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/common/ormconfig.ts",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js --config src/common/ormconfig.ts",
     "migration:generate": "npm run typeorm -- migration:generate --config src/common/ormconfig.ts --connection  --name ",
     "migration:run": "npm run typeorm -- migration:run",
     "lint": "eslint --ext .js,.ts --fix src/",

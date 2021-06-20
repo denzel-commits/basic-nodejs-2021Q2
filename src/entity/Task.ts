@@ -11,16 +11,16 @@ class Task {
   @Column("smallint")
   public order: number;
  
-  @Column("varchar", {length: 100})
+  @Column("varchar", {length: 256})
   public description: string;
 
-  @Column("varchar", {length: 100, nullable: true})
+  @Column("varchar", {length: 36, nullable: true})
   public userId: string;
 
-  @Column("varchar", {length: 100})
+  @Column("varchar", {length: 36})
   public boardId: string;
 
-  @Column("varchar", {length: 100, nullable: true})
+  @Column("varchar", {length: 36, nullable: true})
   public string: string;
 }
  

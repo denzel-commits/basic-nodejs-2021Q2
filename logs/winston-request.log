@@ -4,3 +4,4 @@
 {"message":"Not Found","level":"error","service":"user-service","timestamp":"2021-06-13 07:46:58"}
 {"message":"[Sun, 13 Jun 2021 07:46:58 GMT] GET: /boards/3/tasks/a4afb3d6-773c-4ce9-8816-264705563508 Query params: {} Body: {} Response Status Code: 404 [44ms]","level":"info","service":"user-service","timestamp":"2021-06-13 07:46:58"}
 {"message":"[Sun, 13 Jun 2021 07:58:14 GMT] POST: /boards/3/tasks Query params: {} Body: {\"title\":\"string\",\"order\":0,\"description\":\"string\",\"userId\":\"string\",\"boardId\":\"string\",\"columnId\":\"string\"} Response Status Code: 201 [51ms]","level":"info","service":"user-service","timestamp":"2021-06-13 07:58:14"}
+{"message":"[Sun, 20 Jun 2021 10:24:19 GMT] POST: /users Query params: {} Body: {\"name\":\"string\",\"login\":\"string\",\"password\":\"string\"} Response Status Code: 201 [8ms]","level":"info","service":"rest-service","timestamp":"2021-06-20 10:24:19"}
