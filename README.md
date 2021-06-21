@@ -23,10 +23,9 @@ npm install
 Add in hosts:
 127.0.0.1 postgres
 
-1. npm i
-2. npm run migration:generate init
-3. npm run migration:run
-4. docker-compose up
+1. npm run migration:generate init
+2. npm run migration:run
+3. docker-compose up
 
 ```
 
