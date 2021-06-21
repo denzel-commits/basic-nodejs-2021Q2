@@ -14,7 +14,7 @@ import {User as UserEntity} from "../../entity/User";
  */
 const getAll = async (): Promise<User[]> => {
 
-  const userRepository = getRepository(UserEntity); // you can also get it via getConnection().getRepository() or getManager().getRepository()
+  const userRepository = getRepository(UserEntity);
   const Users : User[] = await userRepository.find();
   
   return Users;

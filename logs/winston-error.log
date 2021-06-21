@@ -29,3 +29,19 @@
 {"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 05:31:34"}
 {"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 05:31:34"}
 {"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 05:31:34"}
+{"name":"EntityColumnNotFound","message":"No entity column \"taskId\" was found.","level":"error","service":"rest-service","timestamp":"2021-06-21 05:57:31"}
+{"name":"EntityColumnNotFound","message":"No entity column \"taskId\" was found.","level":"error","service":"rest-service","timestamp":"2021-06-21 06:04:18"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:05:40"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:05:40"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:05:40"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:05:40"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:05:40"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:05:40"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:05:40"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:07:05"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:07:05"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:07:05"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:07:05"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:07:05"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:07:05"}
+{"message":"Not Found","level":"error","service":"rest-service","timestamp":"2021-06-21 06:07:05"}

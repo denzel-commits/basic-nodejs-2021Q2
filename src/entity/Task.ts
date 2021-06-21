@@ -15,13 +15,13 @@ class Task {
   public description: string;
 
   @Column("varchar", {length: 36, nullable: true})
-  public userId: string;
+  public userId: string | null;
 
   @Column("varchar", {length: 36})
   public boardId: string;
 
   @Column("varchar", {length: 36, nullable: true})
-  public columnId: string;
+  public columnId: string | null;
 }
  
 export { Task };
