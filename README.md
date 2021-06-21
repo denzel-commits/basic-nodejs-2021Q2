@@ -29,7 +29,16 @@ POSTGRES_PASSWORD=postgres
 POSTGRES_DB=postgres
 
 ```
-docker-compose up
+Чтобы запустить приложение:
+
+Add in hosts:
+127.0.0.1 postgres
+
+1. npm i
+2. npm run migration:generate init
+3. npm run migration:run
+4. docker-compose up
+
 ```
 
 After docker containers start app starts on port (4000 as default) you can open
