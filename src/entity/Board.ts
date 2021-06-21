@@ -8,6 +8,9 @@ class Board {
   @Column("varchar", {length: 50})
   public title: string;
 
+  @Column({ type: 'json', array: false })
+  columns: Array<{ id: string; title: string; order: number }>
+
 }
  
 export { Board };
