@@ -18,6 +18,11 @@ router.route('/').get(
   
   const tasks = await getAll(boardId);
 
+  if(tasks.length === 0){ 
+    next(new HttpException(StatusCodes.NOT_FOUND, ReasonPhrases.NOT_FOUND));
+    return;
+  }  
+
   res.status(StatusCodes.OK).json(tasks.map((task) => Task.toResponse(task)));
 }));
 

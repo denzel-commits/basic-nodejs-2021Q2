@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User as UserEntity } from './User'; 
+import { Board as BoardEntity } from './Board'; 
 
 @Entity()
 class Task {
@@ -14,14 +16,20 @@ class Task {
   @Column("varchar", {length: 255})
   public description: string;
 
-  @Column("varchar", {length: 36, nullable: true})
+  @Column("varchar", {nullable: true})
   public userId: string | null;
 
-  @Column("varchar", {length: 36})
+  @Column("varchar", {nullable: true})
   public boardId: string;
 
-  @Column("varchar", {length: 36, nullable: true})
+  @Column("varchar", {nullable: true})
   public columnId: string | null;
+
+  @ManyToOne( () => UserEntity, (user: UserEntity) => user.tasks, {onDelete: 'SET NULL'})
+  public user : UserEntity;
+
+  @ManyToOne( () => BoardEntity, (board: BoardEntity) => board.tasks, {onDelete: 'CASCADE'})
+  public board : BoardEntity;
 }
  
 export { Task };

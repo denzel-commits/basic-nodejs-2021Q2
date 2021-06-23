@@ -3,8 +3,6 @@
  */
 
 import { getAll as getAllBoards, create, read, update, remove} from './board.memory.repository';
-import { getAll as getAllTasks, deleteTask } from '../tasks/task.service';
-
 import { Board } from './board.model';
 
 /**
@@ -37,7 +35,7 @@ const createBoard = (board:Board):Promise<Board> => create(board);
 const updateBoard = async (id:string, board:Board):Promise<boolean> => {
   const foundboard = await read(id);
 
-  if (foundboard === undefined) return false;
+  if (foundboard === null) return false;
 
   await update(id, board);
 
@@ -52,17 +50,9 @@ const updateBoard = async (id:string, board:Board):Promise<boolean> => {
 const deleteBoard = async (id:string): Promise<boolean> => {
   const board = await read(id);
 
-  if (board === undefined) return false;
+  if (board === null) return false;
 
   await remove(id);
-
-  // get all tasks on board
-  const boardTasks = await getAllTasks(id);
-
-  // remove all tasks on board
-  boardTasks.forEach( (task) => {
-    void deleteTask(task.boardId, task.id);
-  });
 
   return true;
 };

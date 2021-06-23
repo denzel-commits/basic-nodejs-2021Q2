@@ -45,7 +45,7 @@ const createTask = (boardId:string, task:Task):Promise<Task> => create(boardId, 
 const updateTask = async (boardId:string, taskId:string, task:Task):Promise<boolean> => {
   const foundtask = await read(boardId, taskId);
 
-  if (foundtask === undefined) return false;
+  if (foundtask === null) return false;
 
   await update(boardId, taskId, task);
 
@@ -61,7 +61,7 @@ const updateTask = async (boardId:string, taskId:string, task:Task):Promise<bool
 const deleteTask = async (boardId:string, taskId:string):Promise<boolean> => {
   const task = await read(boardId, taskId);
 
-  if (task === undefined) return false;
+  if (task === null) return false;
 
   
 

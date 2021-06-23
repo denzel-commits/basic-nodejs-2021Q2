@@ -3,9 +3,7 @@
  */
 
 import { getAll as getAllDBUsers, create as createDBUser, read as readDBUser, update as updateDBUser, remove as removeDBUser } from './user.memory.repository';
-import { getAllByUserId, updateTask } from '../tasks/task.service';
 import { User } from './user.model';
-import { Task } from '../tasks/task.model';
 
 /**
  * Get all users
@@ -37,7 +35,7 @@ const createUser = (user:User):Promise<User> => createDBUser(user);
 const updateUser = async (id:string, user:User):Promise<boolean> => {
   const foundUser = await readDBUser(id);
 
-  if (foundUser === undefined) return false;
+  if (foundUser === null) return false;
 
   await updateDBUser(id, user);
 
@@ -52,20 +50,10 @@ const updateUser = async (id:string, user:User):Promise<boolean> => {
 const deleteUser = async (id: string):Promise<boolean> => {
   const user = await readDBUser(id);
 
-  if (user === undefined) 
+  if (user === null) 
   return false;
 
   await removeDBUser(id);
-
-  const userTasks = await getAllByUserId(id);
-
-
-  userTasks.forEach( (task:Task) => {
-    const curTask = task;
-    curTask.userId = null;
-    void updateTask(task.boardId, task.id, curTask);
-
-  });
 
   return true;
 };
