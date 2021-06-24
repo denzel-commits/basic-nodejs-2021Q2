@@ -2,7 +2,7 @@
  * @module Task service
  */
 
-import { getAllByBoardId, getAllByUserId as getAllDBByUserId, create, read, update, remove } from './task.memory.repository';
+import { getAllByBoardId, getAllByUserId as getAllDBByUserId, create, read, update, remove } from './task.repository';
 import { Task } from './task.model';
 
 /**

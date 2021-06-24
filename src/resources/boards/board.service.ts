@@ -2,7 +2,7 @@
  * @module Board service
  */
 
-import { getAll as getAllBoards, create, read, update, remove} from './board.memory.repository';
+import { getAll as getAllBoards, create, read, update, remove} from './board.repository';
 import { Board } from './board.model';
 
 /**

@@ -26,14 +26,14 @@ import { HttpException } from '../exceptions/HTTPException';
        
     winstonLogger.error(reason);      
     
-    process.exit(1);
+    setTimeout( () => process.exit(1), 100);
   });
   
   process.on('uncaughtException', error => {
 
     winstonLogger.error(error.message);
 
-    process.exit(1);
+    setTimeout( () => process.exit(1), 100);
       
   });
 

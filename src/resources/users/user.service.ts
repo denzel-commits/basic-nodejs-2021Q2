@@ -2,7 +2,7 @@
  * @module User service
  */
 
-import { getAll as getAllDBUsers, create as createDBUser, read as readDBUser, update as updateDBUser, remove as removeDBUser } from './user.memory.repository';
+import { getAll as getAllDBUsers, create as createDBUser, read as readDBUser, update as updateDBUser, remove as removeDBUser } from './user.repository';
 import { User } from './user.model';
 
 /**
