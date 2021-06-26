@@ -3,7 +3,7 @@ services:
   node:
     build: .
     image: denzeldocker/docker-nodeapp
-    restart: on-failure
+    restart: always
     volumes:
       - ./src:/usr/app/src/
       - ./logs:/usr/app/logs/
@@ -21,7 +21,7 @@ services:
   postgres:
     build: ./database/
     image: denzeldocker/docker-postgres
-    restart: on-failure
+    restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - postgres_logs:/logs:z

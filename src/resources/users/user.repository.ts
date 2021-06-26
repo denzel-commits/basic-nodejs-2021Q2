@@ -3,6 +3,8 @@
  */
 
 import {getRepository} from "typeorm";
+import bcrypt from 'bcryptjs';
+
 import { User } from './user.model';
 
 import {User as UserEntity} from "../../entity/User";
@@ -28,9 +30,12 @@ const getAll = async (): Promise<User[]> => {
  */
 const create = async (user: User): Promise<User> => {
   
-  const userRepository = getRepository(UserEntity); 
+  const userRepository = getRepository(UserEntity);
 
-  const createdUser = userRepository.create(user);
+  const password = await bcrypt.hash(user.password, 10);
+  const userWithHash = {...user, password};
+
+  const createdUser = userRepository.create(userWithHash);
   await userRepository.save(createdUser);
 
   return createdUser;
@@ -50,6 +55,19 @@ const read = async (id:string):Promise<User | null> => {
 }
 
 /**
+ * Get user data from database by user login
+ * @param {String} login - User login
+ * @returns {Promise<User | null>} User info
+ */
+ const readByLogin = async (login:string):Promise<User | null> => {
+ 
+  const userRepository = getRepository(UserEntity);
+  const user = await userRepository.findOne({login});
+
+  return user ?? null;
+}
+
+/**
  * Update user data in database
  * @param {String} id - User id
  * @param {Object} user - User object to update to
@@ -57,7 +75,11 @@ const read = async (id:string):Promise<User | null> => {
  */
 const update = async (id: string, user: User): Promise<void> => {
   const userRepository = getRepository(UserEntity); 
-  await userRepository.save({...user, id});
+
+  const password = await bcrypt.hash(user.password, 10);
+  const userWithHash = {...user, password};
+
+  await userRepository.save({...userWithHash, id});
 };
 
 /**
@@ -70,4 +92,4 @@ const remove = async (id: string):Promise<void> => {
   await userRepository.delete(id);
 };
 
-export { getAll, create, read, update, remove };
+export { getAll, create, read, update, remove, readByLogin };

@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+import { RequestHandler } from 'express';
 import { finished } from 'stream';
 import { winstonLogger } from '../common/winston.logger';
 
-function loggerMiddleware(request: Request, response: Response, next: NextFunction): void{
+const loggerMiddleware: RequestHandler = (request, response, next): void => {
     const start = Date.now();
     const datetime = new Date(start).toUTCString();
 
