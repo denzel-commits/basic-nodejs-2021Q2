@@ -7,18 +7,19 @@ import { HttpException } from '../exceptions/HTTPException';
 const authenticateToken: RequestHandler = (req, _res, next): void => {
 
   const authHeader = req.headers.authorization;
+  const authScheme = authHeader && authHeader.split(' ')[0];
   const token = authHeader && authHeader.split(' ')[1];
 
-  if (!token) {    
+  if ( !token || authScheme !== "Bearer" ) {    
     next(new HttpException(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED));
     return;
   }  
 
   if(token !== undefined)
-  jwt.verify(token, JWT_ACCESS_SECRET_KEY as string, (err, user) => {
+  jwt.verify(token, JWT_ACCESS_SECRET_KEY as string, (err) => {
 
     if (err) {
-      console.log(err); console.log(user);
+      // console.log(err);
 
       next(new HttpException(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED))      
       return;
