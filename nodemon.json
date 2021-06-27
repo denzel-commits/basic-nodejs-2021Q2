@@ -3,6 +3,5 @@
     "watch": ["./src/**/*.ts"],
     "exec": "ts-node src/server.ts",
     "ext": "ts",
-    "exitcrash": true,
     "legacy-watch": true
 }

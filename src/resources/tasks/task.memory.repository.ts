@@ -2,34 +2,39 @@
  * @module Task memory repository
  */
 
+import {getRepository} from "typeorm";
 import { Task } from './task.model';
 
-function ensure<Task>(argument: Task | undefined | null, message = 'This value was promised to be there.'): Task {
-  if (argument === undefined || argument === null) {
-    throw new TypeError(message);
-  }
+import {Task as TaskEntity} from "../../entity/Task";
 
-  return argument;
-}
-
-const tasksTable: Task[] = [];
 
 /**
  * Get all tasks by board id
  * @param {String} boardId - Board id
  * @returns {Promise<Task[]>} All tasks for given board id
  */
-const getAllByBoardId = async (boardId:string): Promise<Task[]> =>
-  tasksTable.filter((entry) => entry.boardId === boardId);
+const getAllByBoardId = async (boardId:string): Promise<Task[]> => {
+  
+  const taskRepository = getRepository(TaskEntity);
+  const Tasks : Task[] = await taskRepository.find({ where: { boardId } });
+  
+  return Tasks;
+}
+
 
 /**
  * Get all tasks by user id
  * @param {String} userId - User id
  * @returns {Promise<Task[]>} All tasks assigned to user id
  */
-const getAllByUserId = async (userId:string): Promise<Task[]> =>
-  tasksTable.filter((entry) => entry.userId === userId);
-
+const getAllByUserId = async (userId:string): Promise<Task[]> => {
+  
+  const taskRepository = getRepository(TaskEntity);
+  const Tasks : Task[] = await taskRepository.find({ where: { userId } });
+  
+  return Tasks;
+}
+  
 /**
  * Save new task in database
  * @param {String} boardId - Board id for new task
@@ -39,10 +44,12 @@ const getAllByUserId = async (userId:string): Promise<Task[]> =>
  */
 const create = async (boardId: string, task: Task): Promise<Task> => {
 
-  const newTask = new Task(boardId, task);
-  tasksTable.push(newTask);
+  const taskRepository = getRepository(TaskEntity); 
 
-  return ensure(tasksTable.find((entry) => entry.id === newTask.id));
+  const createdTask = taskRepository.create({...task, boardId});
+  await taskRepository.save(createdTask);
+
+  return createdTask;
 };
 
 /**
@@ -54,10 +61,10 @@ const create = async (boardId: string, task: Task): Promise<Task> => {
  */
 const read = async (boardId:string, taskId:string):Promise<Task | null>  =>{
 
-  const task = tasksTable.find((entry) => entry.id === taskId && entry.boardId === boardId);
+  const taskRepository = getRepository(TaskEntity);
+  const task = await taskRepository.findOne({ where: { boardId, id: taskId } });
 
   return task ?? null;
-
 }
 
 /**
@@ -68,16 +75,9 @@ const read = async (boardId:string, taskId:string):Promise<Task | null>  =>{
  * @returns {Promise<void>} Returns nothing
  */
 const update = async (boardId:string, taskId:string, task:Task):Promise<void> => {
-  const index = tasksTable.findIndex(
-    (entry) => entry.id === taskId && entry.boardId === boardId
-  );
 
-  ensure(tasksTable[index]).title = task.title;
-  ensure(tasksTable[index]).order = task.order;
-  ensure(tasksTable[index]).description = task.description;
-  ensure(tasksTable[index]).userId = task.userId;
-  ensure(tasksTable[index]).boardId = task.boardId;
-  ensure(tasksTable[index]).columnId = task.columnId;
+  const taskRepository = getRepository(TaskEntity);
+  await taskRepository.save({...task, taskId, boardId});
 };
 
 /**
@@ -87,10 +87,17 @@ const update = async (boardId:string, taskId:string, task:Task):Promise<void> =>
  * @returns {Promise<void>} - Returns nothing
  */
 const remove = async (boardId:string, taskId:string):Promise<void> => {
-  const index = tasksTable.findIndex(
-    (entry) => entry.id === taskId && entry.boardId === boardId
-  );
-  tasksTable.splice(index, 1);
+
+  const taskRepository = getRepository(TaskEntity);
+  await taskRepository.delete({ boardId, id: taskId });
+
+  // await getConnection()
+  //   .createQueryBuilder()
+  //   .delete()
+  //   .from(TaskEntity)
+  //   .where("boardId = :boardId", { boardId })
+  //   .andWhere("id = :taskId", { taskId })
+  //   .execute();
 };
 
 export {

@@ -2,24 +2,23 @@
  * @module User memory repository
  */
 
+import {getRepository} from "typeorm";
 import { User } from './user.model';
 
-const usersTable: User[] = [];
-
-function ensure<User>(argument: User | undefined | null, message = 'This value was promised to be there.'): User {
-  if (argument === undefined || argument === null) {
-    throw new TypeError(message);
-  }
-
-  return argument;
-}
+import {User as UserEntity} from "../../entity/User";
 
 /**
  * Returns all available users
  *
  * @returns {Promise<User[]>} - All users
  */
-const getAll = async (): Promise<User[]> => usersTable;
+const getAll = async (): Promise<User[]> => {
+
+  const userRepository = getRepository(UserEntity);
+  const Users : User[] = await userRepository.find();
+  
+  return Users;
+}
 
 /**
  * Save new user in database
@@ -28,10 +27,13 @@ const getAll = async (): Promise<User[]> => usersTable;
  * @returns {Promise<User>} Returns created user
  */
 const create = async (user: User): Promise<User> => {
-  const newUser = new User(user);
-  usersTable.push(newUser);
+  
+  const userRepository = getRepository(UserEntity); 
 
-  return ensure(usersTable.find((entry) => entry.id === newUser.id));
+  const createdUser = userRepository.create(user);
+  await userRepository.save(createdUser);
+
+  return createdUser;
 };
 
 /**
@@ -41,10 +43,10 @@ const create = async (user: User): Promise<User> => {
  */
 const read = async (id:string):Promise<User | null> => {
  
- const user = usersTable.find((entry) => entry.id === id);
+  const userRepository = getRepository(UserEntity);
+  const user = await userRepository.findOne(id);
 
- return user ?? null;
-
+  return user ?? null;
 }
 
 /**
@@ -54,11 +56,8 @@ const read = async (id:string):Promise<User | null> => {
  * @returns {Promise<void>} Returns nothing
  */
 const update = async (id: string, user: User): Promise<void> => {
-  const index : number = ensure(usersTable.findIndex((entry) => entry.id === id));
-
-  ensure(usersTable[index]).name = user.name;
-  ensure(usersTable[index]).login = user.login;
-  ensure(usersTable[index]).password = user.password;
+  const userRepository = getRepository(UserEntity); 
+  await userRepository.save({...user, id});
 };
 
 /**
@@ -67,8 +66,8 @@ const update = async (id: string, user: User): Promise<void> => {
  * @returns {Promise<void>} Returns nothing
  */
 const remove = async (id: string):Promise<void> => {
-  const index = usersTable.findIndex((entry) => entry.id === id);
-  usersTable.splice(index, 1);
+  const userRepository = getRepository(UserEntity);
+  await userRepository.delete(id);
 };
 
 export { getAll, create, read, update, remove };
