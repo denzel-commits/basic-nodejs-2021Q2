@@ -23,21 +23,8 @@ npm install
 Add in hosts:
 127.0.0.1 postgres
 
-1. npm run migration:generate init
-2. npm run migration:run
-3. docker-compose up
+docker-compose up
 
-```
-
-```
-.env file should be created in root app directory with the following format
-
-NODE_ENV=development
-PORT=4000
-POSTGRES_PORT=5432
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_DB=postgres
 ```
 
 After docker containers start app starts on port (4000 as default) you can open
