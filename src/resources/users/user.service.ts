@@ -15,18 +15,17 @@ import { User } from './user.model';
  * @returns {Promise<Boolean>} Returns "true" on success and "false" if user does not exist
  */
  const loginUser = async (user: User):Promise<string> => {
-        const foundUser = await readByLogin(user.login);
+    const foundUser = await readByLogin(user.login);
 
-        if (foundUser === null) return '';
+    if (foundUser === null) return '';
 
-        const match = await bcrypt.compare(user.password, foundUser.password);
+    const match = await bcrypt.compare(user.password, foundUser.password);
 
-        if(match){
-          if(JWT_ACCESS_SECRET_KEY !== undefined)
-          return jwt.sign({userId: foundUser.id, login: foundUser.login}, JWT_ACCESS_SECRET_KEY);
-        }
+    if(match){
+      return jwt.sign({userId: foundUser.id, login: foundUser.login}, JWT_ACCESS_SECRET_KEY as string);
+    }
 
-        return '';
+    return '';
 };
 
 /**

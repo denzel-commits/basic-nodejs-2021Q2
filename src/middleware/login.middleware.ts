@@ -18,7 +18,7 @@ router.route('/').post(
     const accessToken = await loginUser(req.body);
     
     if(accessToken === '') {
-        res.status(StatusCodes.FORBIDDEN).json(StatusCodes.FORBIDDEN);           
+        res.status(StatusCodes.FORBIDDEN).json({message: 'Incorrect login or password'});           
         return;
     }  
     
