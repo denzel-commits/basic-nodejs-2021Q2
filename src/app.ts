@@ -26,12 +26,12 @@ app.use('/', (req, res, next) => {
 });
 
 app.use(loggerMiddleware);
-// app.use(authenticateToken);
 
 app.use('/login', loginRouter);
-app.use('/users', authenticateToken, userRouter);
-app.use('/boards', authenticateToken, boardRouter);
-app.use('/boards/:boardId/tasks', authenticateToken, taskRouter);
+app.use(authenticateToken);
+app.use('/users', userRouter);
+app.use('/boards', boardRouter);
+app.use('/boards/:boardId/tasks', taskRouter);
 app.use('/failed', () => process.exit(2));
 
 app.use(errorMiddleware);
