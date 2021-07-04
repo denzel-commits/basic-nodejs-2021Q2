@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Task as TaskEntity } from './task.entity';
-import { iColumn } from '../interfaces/column.interface';
+import { IColumn } from '../interfaces/column.interface';
 
 @Entity()
 export class Board {
@@ -11,7 +11,7 @@ export class Board {
   public title: string;
 
   @Column({ type: 'json', array: false })
-  columns: iColumn[];
+  columns: IColumn[];
 
   @OneToMany(() => TaskEntity, (task: TaskEntity) => task.board)
   public tasks: TaskEntity[];

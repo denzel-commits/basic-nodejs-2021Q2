@@ -1,0 +1,19 @@
+{
+  "type": "postgres",
+  "host": "postgres",
+  "port": 5432,
+  "username": "postgres",
+  "password": "postgres",
+  "database": "postgres",
+  "entities": [
+    "/Users/tanesal/Documents/rsschool/nodejs/task9_2/basic-nodejs-2021Q2/src/model/*.entity.{ts,js}"
+  ],
+  "migrationsTableName": "migration",
+  "migrations": [
+    "src/migration/*.ts"
+  ],
+  "cli": {
+    "migrationsDir": "src/migration"
+  },
+  "ssl": false
+}
