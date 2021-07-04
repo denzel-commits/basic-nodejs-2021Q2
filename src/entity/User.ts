@@ -1,18 +1,23 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Task as TaskEntity } from './Task';
 
 @Entity()
 class User {
   @PrimaryGeneratedColumn("uuid")
   public id: string;
  
-  @Column("varchar", {length: 50})
+  @Column("varchar", {length: 100, nullable: false})
   public name: string;
  
-  @Column("varchar", {length: 50})
+  @Column("varchar", {length: 100, nullable: false})
   public login: string;
  
-  @Column("varchar", {length: 50})
+  @Column("varchar", {length: 255, nullable: false})
   public password: string;
+
+  @OneToMany(() => TaskEntity, (task: TaskEntity) => task.user)
+  public tasks: TaskEntity[];
+
 }
  
 export { User };

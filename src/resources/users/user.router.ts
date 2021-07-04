@@ -45,6 +45,11 @@ router.route('/').post(
 
   const user = await createUser(req.body);
 
+  if( user === null ) {
+    next(new HttpException(StatusCodes.CONFLICT, "User is already exists."));
+    return; 
+  }  
+
   res.status(StatusCodes.CREATED).json(User.toResponse(user));
 }));
 

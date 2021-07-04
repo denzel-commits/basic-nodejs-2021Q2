@@ -2,7 +2,8 @@ import express from 'express';
 import swaggerUI, { JsonObject } from 'swagger-ui-express';
 import path from 'path';
 import YAML from 'yamljs';
-import { errorMiddleware, loggerMiddleware } from './middleware';
+import { errorMiddleware, loggerMiddleware, authenticateToken } from './middleware';
+import { router as loginRouter } from './middleware/login.middleware';
 import { router as userRouter } from './resources/users/user.router';
 import { router as boardRouter } from './resources/boards/board.router';
 import { router as taskRouter } from './resources/tasks/task.router';
@@ -26,10 +27,11 @@ app.use('/', (req, res, next) => {
 
 app.use(loggerMiddleware);
 
+app.use('/login', loginRouter);
+app.use(authenticateToken);
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 app.use('/boards/:boardId/tasks', taskRouter);
-app.use('/failed', () => process.exit(2));
 
 app.use(errorMiddleware);
 
