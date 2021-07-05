@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
   UseFilters,
@@ -11,6 +11,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { HttpExceptionFilter } from '../../exceptions/http-exception.filter';
@@ -27,7 +28,7 @@ export class UsersController {
     if (user === null) {
       throw new ConflictException();
     }
-    return user;
+    return user.toResponse();
   }
 
   @Get()
@@ -47,14 +48,15 @@ export class UsersController {
     return user.toResponse();
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    const user = await this.usersService.update(id, updateUserDto);
+    const user: User = await this.usersService.update(id, updateUserDto);
 
     if (user === null) {
       throw new NotFoundException();
     }
-    return user;
+
+    return User.toResponse(user);
   }
 
   @Delete(':id')
@@ -64,6 +66,6 @@ export class UsersController {
     if (user === null) {
       throw new NotFoundException();
     }
-    return user;
+    return user.toResponse();
   }
 }

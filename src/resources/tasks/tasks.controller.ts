@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
   UseFilters,
@@ -45,7 +45,7 @@ export class TasksController {
     return task;
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(
     @Param('boardId') boardId: string,
     @Param('id') id: string,

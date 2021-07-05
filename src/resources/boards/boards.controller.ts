@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
   UseFilters,
@@ -38,7 +38,7 @@ export class BoardsController {
     return board;
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(
     @Param('id') id: string,
     @Body() updateBoardDto: UpdateBoardDto,
