@@ -1,26 +1,51 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Board } from './entities/board.entity';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 
 @Injectable()
 export class BoardsService {
-  create(createBoardDto: CreateBoardDto) {
-    return 'This action adds a new board';
+  constructor(
+    @InjectRepository(Board)
+    private boardsRepository: Repository<Board>,
+  ) {}
+
+  async create(createBoardDto: CreateBoardDto): Promise<Board> {
+    const createdBoard = this.boardsRepository.create(createBoardDto);
+
+    return await this.boardsRepository.save(createdBoard);
   }
 
-  findAll() {
-    return `This action returns all boards`;
+  async findAll(): Promise<Board[]> {
+    return await this.boardsRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} board`;
+  async findOne(id: string): Promise<Board | null> {
+    const board = await this.boardsRepository.findOne(id);
+
+    return board ?? null;
   }
 
-  update(id: number, updateBoardDto: UpdateBoardDto) {
-    return `This action updates a #${id} board`;
+  async update(
+    id: string,
+    updateBoardDto: UpdateBoardDto,
+  ): Promise<Board | null> {
+    const board = await this.boardsRepository.findOne(id);
+
+    if (!board) return null;
+
+    return await this.boardsRepository.save({ ...updateBoardDto, id });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} board`;
+  async remove(id: string): Promise<Board | null> {
+    const board = await this.boardsRepository.findOne(id);
+
+    if (!board) return null;
+
+    await this.boardsRepository.delete(id);
+
+    return board;
   }
 }

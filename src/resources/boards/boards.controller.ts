@@ -1,9 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseFilters,
+  NotFoundException,
+} from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
+import { HttpExceptionFilter } from '../../exceptions/http-exception.filter';
 
 @Controller('boards')
+@UseFilters(HttpExceptionFilter)
 export class BoardsController {
   constructor(private readonly boardsService: BoardsService) {}
 
@@ -18,17 +30,32 @@ export class BoardsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.boardsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const board = await this.boardsService.findOne(id);
+    if (board === null) {
+      throw new NotFoundException();
+    }
+    return board;
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBoardDto: UpdateBoardDto) {
-    return this.boardsService.update(+id, updateBoardDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateBoardDto: UpdateBoardDto,
+  ) {
+    const board = await this.boardsService.update(id, updateBoardDto);
+    if (board === null) {
+      throw new NotFoundException();
+    }
+    return board;
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.boardsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const board = await this.boardsService.remove(id);
+    if (board === null) {
+      throw new NotFoundException();
+    }
+    return board;
   }
 }

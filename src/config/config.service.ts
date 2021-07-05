@@ -1,4 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { User } from 'src/resources/users/entities/user.entity';
+import { Task } from 'src/resources/tasks/entities/task.entity';
+import { Board } from 'src/resources/boards/entities/board.entity';
 
 import * as dotenv from 'dotenv';
 import * as path from 'path';
@@ -8,8 +11,6 @@ const DIR_NAME = path.resolve(path.dirname(''));
 dotenv.config({
   path: path.join(DIR_NAME, './.env'),
 });
-
-// console.log('dir name is = ' + __dirname);
 
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
@@ -47,12 +48,16 @@ class ConfigService {
       password: this.getValue('POSTGRES_PASSWORD'),
       database: this.getValue('POSTGRES_DATABASE'),
 
-      // entities: [path.join(__dirname, '../model/', '*.entity.{ts,js}')],
-      entities: [path.join(DIR_NAME, '/src/model/', '*.entity.{ts,js}')],
+      // entities: [path.join(__dirname, '..', '*.entity.{ts,js}')],
+      // entities: [path.join(DIR_NAME, '**', '*.entity.{ts,js}')],
+      // entities: [
+      //   path.join(DIR_NAME, 'src/model/*.ts'),
+      //   path.join(DIR_NAME, 'dist/model/*.js'),
+      // ],
 
-      migrationsTableName: 'migration',
+      entities: [User, Task, Board],
 
-      migrations: ['src/migration/*.ts'],
+      // migrations: ['src/migration/*.ts'],
 
       cli: {
         migrationsDir: 'src/migration',

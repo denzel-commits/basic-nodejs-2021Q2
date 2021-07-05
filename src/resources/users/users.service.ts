@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/model/user.entity';
+import * as bcrypt from 'bcryptjs';
+import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -12,33 +13,48 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  create(createUserDto: CreateUserDto): User {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto): Promise<User | null> {
+    const foundUser = await this.usersRepository.findOne({
+      login: createUserDto.login,
+    });
 
-    const userRepository = getRepository(UserEntity);
+    if (foundUser) return null;
 
-    const password = await bcrypt.hash(user.password, 10);
-    const userWithHash = { ...user, password };
+    const password = await bcrypt.hash(createUserDto.password, 10);
+    const userWithHash = { ...createUserDto, password };
 
-    const createdUser = userRepository.create(userWithHash);
-    await userRepository.save(createdUser);
-
-    return createdUser;
+    const createdUser = this.usersRepository.create(userWithHash);
+    return await this.usersRepository.save(createdUser);
   }
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.find();
+  async findAll(): Promise<User[]> {
+    return await this.usersRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: string): Promise<User | null> {
+    const user = await this.usersRepository.findOne(id);
+
+    return user ?? null;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
+    const foundUser = await this.usersRepository.findOne(id);
+
+    if (!foundUser) return null;
+
+    const password = await bcrypt.hash(updateUserDto.password, 10);
+    const userWithHash = { ...updateUserDto, password };
+
+    return await this.usersRepository.save({ ...userWithHash, id });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string): Promise<User | null> {
+    const foundUser = await this.usersRepository.findOne(id);
+
+    if (!foundUser) return null;
+
+    await this.usersRepository.delete(id);
+
+    return foundUser;
   }
 }

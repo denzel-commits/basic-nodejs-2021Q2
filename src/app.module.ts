@@ -9,8 +9,8 @@ import { TasksModule } from './resources/tasks/tasks.module';
 
 @Module({
   imports: [
-    UsersModule,
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
+    UsersModule,
     BoardsModule,
     TasksModule,
   ],

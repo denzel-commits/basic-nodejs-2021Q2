@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Task as TaskEntity } from './task.entity';
+import { Task as TaskEntity } from '../../tasks/entities/task.entity';
 
 @Entity()
 export class User {
@@ -17,4 +17,8 @@ export class User {
 
   @OneToMany(() => TaskEntity, (task: TaskEntity) => task.user)
   public tasks: TaskEntity[];
+
+  toResponse(): { id: string; name: string; login: string } {
+    return { id: this.id, name: this.name, login: this.login };
+  }
 }

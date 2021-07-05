@@ -6,9 +6,8 @@
   "password": "postgres",
   "database": "postgres",
   "entities": [
-    "/Users/tanesal/Documents/rsschool/nodejs/task9_2/basic-nodejs-2021Q2/src/model/*.entity.{ts,js}"
+    "/Users/tanesal/Documents/rsschool/nodejs/task9_2/basic-nodejs-2021Q2/**/*.entity.{ts,js}"
   ],
-  "migrationsTableName": "migration",
   "migrations": [
     "src/migration/*.ts"
   ],
