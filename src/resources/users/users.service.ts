@@ -37,6 +37,12 @@ export class UsersService {
     return user ?? null;
   }
 
+  async findOneByLogin(login: string): Promise<User | null> {
+    const user = await this.usersRepository.findOne({ login });
+
+    return user ?? null;
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
     const foundUser = await this.usersRepository.findOne(id);
 

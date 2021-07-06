@@ -1,4 +1,4 @@
-import { configService } from '../config/config.service';
+import { configService } from '../config/database.config';
 import * as fs from 'fs';
 
 fs.writeFileSync(

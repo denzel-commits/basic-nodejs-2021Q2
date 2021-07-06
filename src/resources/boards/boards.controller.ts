@@ -8,14 +8,17 @@ import {
   Delete,
   UseFilters,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 import { HttpExceptionFilter } from '../../exceptions/http-exception.filter';
+import { IsAuthGuard } from '../auth/guards/is.auth.guard';
 
 @Controller('boards')
 @UseFilters(HttpExceptionFilter)
+@UseGuards(IsAuthGuard)
 export class BoardsController {
   constructor(private readonly boardsService: BoardsService) {}
 

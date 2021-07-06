@@ -38,6 +38,11 @@ class ConfigService {
     return mode != 'development';
   }
 
+  public runMigrations() {
+    const migrations = this.getValue('RUN_MIGRATIONS', false);
+    return migrations === 'true';
+  }
+
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
       type: 'postgres',
@@ -47,6 +52,8 @@ class ConfigService {
       username: this.getValue('POSTGRES_USER'),
       password: this.getValue('POSTGRES_PASSWORD'),
       database: this.getValue('POSTGRES_DATABASE'),
+      synchronize: false,
+      migrationsRun: this.runMigrations(),
 
       // entities: [path.join(__dirname, '..', '*.entity.{ts,js}')],
       // entities: [path.join(DIR_NAME, '**', '*.entity.{ts,js}')],
@@ -57,7 +64,7 @@ class ConfigService {
 
       entities: [User, Task, Board],
 
-      // migrations: ['src/migration/*.ts'],
+      migrations: ['dist/migration/*.ts'],
 
       cli: {
         migrationsDir: 'src/migration',
