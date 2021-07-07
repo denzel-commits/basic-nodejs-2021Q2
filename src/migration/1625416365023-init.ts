@@ -1,5 +1,4 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
-import * as bcrypt from 'bcryptjs';
 
 export class init1625416365023 implements MigrationInterface {
   name = 'init1625416365023';
@@ -20,12 +19,6 @@ export class init1625416365023 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "task" ADD CONSTRAINT "FK_d88edac9d7990145ff6831a7bb3" FOREIGN KEY ("boardId") REFERENCES "board"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
-    await queryRunner.query(
-      `INSERT INTO "user" (name, login, password) values('admin', 'admin', '${await bcrypt.hash(
-        'admin',
-        10,
-      )}')`,
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
@@ -38,6 +31,5 @@ export class init1625416365023 implements MigrationInterface {
     await queryRunner.query(`DROP TABLE "board"`);
     await queryRunner.query(`DROP TABLE "task"`);
     await queryRunner.query(`DROP TABLE "user"`);
-    await queryRunner.query(`DELETE FROM "user" WHERE login = 'admin'`);
   }
 }

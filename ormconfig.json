@@ -7,8 +7,12 @@
   "database": "postgres",
   "synchronize": false,
   "migrationsRun": true,
-  "entities": ["dist/**/*.entity.{ts,js}"],
-  "migrations": ["src/migration/*.ts"],
+  "entities": [
+    "/Users/tanesal/Documents/rsschool/nodejs/task9_2/basic-nodejs-2021Q2/src/**/*.entity.{ts,js}"
+  ],
+  "migrations": [
+    "dist/migration/*{.ts,.js}"
+  ],
   "cli": {
     "migrationsDir": "src/migration"
   },
