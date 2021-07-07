@@ -83,5 +83,10 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "npm run lint"
+    ]
   }
 }
