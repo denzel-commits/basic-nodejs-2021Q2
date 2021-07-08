@@ -6,18 +6,15 @@ import {
   Put,
   Param,
   Delete,
-  UseFilters,
   NotFoundException,
   UseGuards,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { HttpExceptionFilter } from 'src/exceptions/http-exception.filter';
 import { IsAuthGuard } from '../auth/guards/is.auth.guard';
 
 @Controller('/boards/:boardId/tasks')
-@UseFilters(HttpExceptionFilter)
 @UseGuards(IsAuthGuard)
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}

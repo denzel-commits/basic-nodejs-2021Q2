@@ -4,12 +4,15 @@ import {
   ForbiddenException,
   Get,
   Post,
+  UseFilters,
 } from '@nestjs/common';
 import { AuthService } from './resources/auth/auth.service';
 import { AppService } from './app.service';
 import { CreateAuthDto } from './resources/auth/dto/create-auth.dto';
+import { HttpExceptionFilter } from './exceptions/http-exception.filter';
 
 @Controller()
+@UseFilters(HttpExceptionFilter)
 export class AppController {
   constructor(
     private readonly appService: AppService,
@@ -25,6 +28,11 @@ export class AppController {
     }
 
     return { token: accessToken };
+  }
+
+  @Get('failed')
+  getFail(): string {
+    throw Error('unhandled');
   }
 
   @Get()

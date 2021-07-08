@@ -6,7 +6,6 @@ import {
   Put,
   Param,
   Delete,
-  UseFilters,
   ConflictException,
   NotFoundException,
   UseGuards,
@@ -15,11 +14,9 @@ import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { HttpExceptionFilter } from '../../exceptions/http-exception.filter';
 import { IsAuthGuard } from '../auth/guards/is.auth.guard';
 
 @Controller('users')
-@UseFilters(HttpExceptionFilter)
 @UseGuards(IsAuthGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
