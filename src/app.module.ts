@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { WinstonModule } from 'nest-winston';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { configService } from './config/config';
+import { configService } from './config/configuration';
 import { UsersModule } from './resources/users/users.module';
 import { BoardsModule } from './resources/boards/boards.module';
 import { TasksModule } from './resources/tasks/tasks.module';
@@ -11,7 +11,7 @@ import { AuthModule } from './resources/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
-import { AllExceptionsFilter } from './exceptions/all.exceptions.filter';
+import { AllExceptionsFilter } from './exception-filters/all-exceptions.filter';
 
 @Module({
   imports: [
