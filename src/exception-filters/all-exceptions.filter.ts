@@ -31,7 +31,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       `${status} ${request.method}: ${request.url} Query params: ${queryParams} Body: ${bodyData}`,
     );
 
-    response.status(status).json({
+    response.status(status).send({
       statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,

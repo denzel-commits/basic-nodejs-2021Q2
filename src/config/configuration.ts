@@ -41,6 +41,11 @@ class ConfigService {
     return migrations === 'true';
   }
 
+  public useFastify() {
+    const useFastify = this.getValue('USE_FASTIFY', false);
+    return useFastify === 'true';
+  }
+
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
       type: 'postgres',
@@ -90,7 +95,7 @@ class ConfigService {
   }
 }
 
-const configService = new ConfigService(process.env).ensureValues([
+const configuration = new ConfigService(process.env).ensureValues([
   'POSTGRES_HOST',
   'POSTGRES_PORT',
   'POSTGRES_USER',
@@ -98,4 +103,4 @@ const configService = new ConfigService(process.env).ensureValues([
   'POSTGRES_DATABASE',
 ]);
 
-export { configService };
+export { configuration };

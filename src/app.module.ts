@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { WinstonModule } from 'nest-winston';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { configService } from './config/configuration';
+import { configuration } from './config/configuration';
 import { UsersModule } from './resources/users/users.module';
 import { BoardsModule } from './resources/boards/boards.module';
 import { TasksModule } from './resources/tasks/tasks.module';
@@ -15,9 +15,9 @@ import { AllExceptionsFilter } from './exception-filters/all-exceptions.filter';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
+    TypeOrmModule.forRoot(configuration.getTypeOrmConfig()),
     ConfigModule.forRoot({ isGlobal: true }),
-    WinstonModule.forRoot(configService.getWinstonOptions()),
+    WinstonModule.forRoot(configuration.getWinstonOptions()),
     UsersModule,
     BoardsModule,
     TasksModule,
