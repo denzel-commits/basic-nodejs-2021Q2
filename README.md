@@ -97,13 +97,13 @@ For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 - Scenarios Completed: 887
 - Requests Completed: 4435
 
-| Title             | Description                | Values                             |
-| ----------------- | -------------------------- | ---------------------------------- |
-| Scenario Counts   | [count]                    | 887                                |
-| Scenario Duration | [min, max, median,p95,p99] | 224, 12576.5, 279.6, 5576, 10940.5 |
-| Latencies         | [min, max, median,p95,p99] | 5, 6962, 53, 763.8, 2810.5         |
-| Success           | [ratio]                    | 100.00%                            |
-| Status Codes      | [code:count]               | 200:3548, 201:887                  |
+| Title             | Description                  | Values                             |
+| ----------------- | ---------------------------- | ---------------------------------- |
+| Scenario Counts   | [count]                      | 887                                |
+| Scenario Duration | [min, max, median, p95, p99] | 224, 12576.5, 279.6, 5576, 10940.5 |
+| Latencies         | [min, max, median, p95, p99] | 5, 6962, 53, 763.8, 2810.5         |
+| Success           | [ratio]                      | 100.00%                            |
+| Status Codes      | [code:count]                 | 200:3548, 201:887                  |
 
 For more information, visit: [Express performance HTML report](https://github.com/denzel-commits/basic-nodejs-2021Q2/blob/task9/express-nest-migration/load-testing/reports/html-reports/express-report.html)
 
