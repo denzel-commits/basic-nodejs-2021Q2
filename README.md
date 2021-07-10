@@ -103,7 +103,7 @@ Requests Completed: 4435
 | Scenario Duration | [min, max, median,p95,p99] | 224, 12576.5, 279.6, 5576, 10940.5 |
 | Latencies         | [min, max, median,p95,p99] | 5, 6962, 53, 763.8, 2810.5         |
 | Success           | [ratio]                    | 100.00%                            |
-| Status Codes      | [code:count]               | 200:3548, 201: 887                 |
+| Status Codes      | [code:count]               | 200:3548, 201:887                  |
 
 For more information, visit: [Express performance report](https://github.com/denzel-commits/basic-nodejs-2021Q2/blob/task9/express-nest-migration/load-testing/reports/html-reports/express-report.html)
 
@@ -113,12 +113,12 @@ Scenarios Created: 900
 Scenarios Completed: 900
 Requests Completed: 4500
 
-| Command           | Description                |
-| ----------------- | -------------------------- | ------------------------------------ |
-| Scenario Counts   | [count]                    | 900                                  |
-| Scenario Duration | [min, max, median,p95,p99] | 216.3, 3037.2, 265.6, 1068.7, 2525.2 |
-| Latencies         | [min, max, median,p95,p99] | 5, 1656, 22, 240, 570                |
-| Success           | [ratio]                    | 100.00%                              |
-| Status Codes      | [code:count]               | 200:3600, 201: 900                   |
+| Command           | Description                  |
+| ----------------- | ---------------------------- | ------------------------------------ |
+| Scenario Counts   | [count]                      | 900                                  |
+| Scenario Duration | [min, max, median, p95, p99] | 216.3, 3037.2, 265.6, 1068.7, 2525.2 |
+| Latencies         | [min, max, median, p95, p99] | 5, 1656, 22, 240, 570                |
+| Success           | [ratio]                      | 100.00%                              |
+| Status Codes      | [code:count]                 | 200:3600, 201:900                    |
 
 For more information, visit: [Fastify performance report](https://github.com/denzel-commits/basic-nodejs-2021Q2/blob/task9/express-nest-migration/load-testing/reports/html-reports/fastify-report.html)
