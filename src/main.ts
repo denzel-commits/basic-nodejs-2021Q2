@@ -27,15 +27,17 @@ async function expressBootstrap() {
 
 async function fastifyBootstrap() {
   console.log('Use Fastify');
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
   );
+
   const configService = app.get(ConfigService);
   app.useGlobalPipes(new ValidationPipe());
 
-  // const document = SwaggerModule.createDocument(app, swaggerDocument);
-  // SwaggerModule.setup('doc', app, document);
+  const document = SwaggerModule.createDocument(app, swaggerDocument);
+  SwaggerModule.setup('doc', app, document);
   await app.listen(configService.get<number>('PORT'), '0.0.0.0');
 }
 
