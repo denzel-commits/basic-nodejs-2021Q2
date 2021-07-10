@@ -93,9 +93,9 @@ For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 
 ### Express
 
-Scenarios Created: 887
-Scenarios Completed: 887
-Requests Completed: 4435
+- Scenarios Created: 887
+- Scenarios Completed: 887
+- Requests Completed: 4435
 
 | Title             | Description                | Values                             |
 | ----------------- | -------------------------- | ---------------------------------- |
@@ -109,9 +109,9 @@ For more information, visit: [Express performance HTML report](https://github.co
 
 ### Fastify
 
-Scenarios Created: 900
-Scenarios Completed: 900
-Requests Completed: 4500
+- Scenarios Created: 900
+- Scenarios Completed: 900
+- Requests Completed: 4500
 
 | Title             | Description                  | Values                               |
 | ----------------- | ---------------------------- | ------------------------------------ |
