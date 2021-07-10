@@ -97,7 +97,7 @@ Scenarios Created: 887
 Scenarios Completed: 887
 Requests Completed: 4435
 
-|                   |                            |
+| Title             | Description                | Values                             |
 | ----------------- | -------------------------- | ---------------------------------- |
 | Scenario Counts   | [count]                    | 887                                |
 | Scenario Duration | [min, max, median,p95,p99] | 224, 12576.5, 279.6, 5576, 10940.5 |
@@ -113,7 +113,7 @@ Scenarios Created: 900
 Scenarios Completed: 900
 Requests Completed: 4500
 
-|                   |                              |
+| Title             | Description                  | Values                               |
 | ----------------- | ---------------------------- | ------------------------------------ |
 | Scenario Counts   | [count]                      | 900                                  |
 | Scenario Duration | [min, max, median, p95, p99] | 216.3, 3037.2, 265.6, 1068.7, 2525.2 |
