@@ -16,7 +16,8 @@ const swaggerDocument = YAML.load(path.join(DIR_NAME, './doc/api.yaml'));
 
 async function expressBootstrap() {
   console.log('Use Express');
-  const app = await NestFactory.create(AppModule);
+  let app: Promise<any>;
+  app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   app.useGlobalPipes(new ValidationPipe());
 
