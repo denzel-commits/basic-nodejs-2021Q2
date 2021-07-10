@@ -93,8 +93,8 @@ For more information, visit: https://code.visualstudio.com/docs/editor/debugging
 
 ### Express
 
-For more information, visit: https://github.com/denzel-commits/basic-nodejs-2021Q2/blob/task9/express-nest-migration/load-testing/reports/html-reports/express-report.html
+For more information, visit: [Express performance report](https://github.com/denzel-commits/basic-nodejs-2021Q2/blob/task9/express-nest-migration/load-testing/reports/html-reports/express-report.html)
 
 ### Fastify
 
-For more information, visit: https://github.com/denzel-commits/basic-nodejs-2021Q2/blob/task9/express-nest-migration/load-testing/reports/html-reports/fastify-report.html
+For more information, visit: [Fastify performance report](https://github.com/denzel-commits/basic-nodejs-2021Q2/blob/task9/express-nest-migration/load-testing/reports/html-reports/fastify-report.html)
